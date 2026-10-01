@@ -108,7 +108,7 @@ export default function login() {
                     disabled={isPending}
                     className="btn btn-neutral mt-4"
                   >
-                    {isPending ? "Registrazione..." : "Registrati"}
+                    {isPending ? "Accesso..." : "Accedi"}
                   </button>
                 </form>
               </fieldset>
