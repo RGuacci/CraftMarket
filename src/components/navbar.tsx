@@ -28,10 +28,10 @@ export default function Navbar() {
             className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
           >
             <Link to={"/register"}>
-              <a>Registrati</a>
+              Registrati
             </Link>
             <Link to={"/login"}>
-              <a>Accedi</a>
+              Accedi
             </Link>
             <button className="btn" disabled={isPending} onClick={handleLogout}>
               Logout
