@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router";
 import { useRegister } from "../../hooks/mutations/useRegister";
 import type { RegisterData } from "../../services/authService";
 import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Register() {
   const navigate = useNavigate();
   const { mutate, isPending, isSuccess, isError, error } = useRegister();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -39,7 +41,10 @@ export default function Register() {
           }
         }
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey:["user"],
+        })
         navigate("/");
       },
     });
@@ -140,7 +145,7 @@ export default function Register() {
 
                   <div>
                     <Link to="/login" className="link link-hover">
-                      Hai gia un account? Accedi
+                      Hai gia un account? <span className="font-bold">Accedi</span>
                     </Link>
                   </div>
                   <button

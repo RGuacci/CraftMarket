@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useLogin } from "../../hooks/mutations/useLogin";
 import type { LoginData } from "../../services/authService";
 import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function login() {
   const navigate = useNavigate();
   const { mutate, isPending, isSuccess, isError, error } = useLogin();
+   const queryClient = useQueryClient();
 
   const {
     register,
@@ -39,7 +41,10 @@ export default function login() {
           }
         }
       },
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["user"],
+        });
         navigate("/");
       },
     });
@@ -100,8 +105,9 @@ export default function login() {
                       </span>
                     )}
                   </div>
-                  <div>
+                  <div className="flex flex-col gap-3">
                     <a className="link link-hover">Password dimenticata?</a>
+                    <Link className="link link-hover" to={"/register"}>Non hai un account? <span className="font-bold">Registrati</span></Link>
                   </div>
                   <button
                     type="submit"

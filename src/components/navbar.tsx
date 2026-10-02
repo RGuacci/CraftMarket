@@ -1,6 +1,9 @@
 import { useLogout } from "../hooks/mutations/uselogout";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/authContext";
+import { CgProfile } from "react-icons/cg";
+import { BsCart4 } from "react-icons/bs";
+import { FaSearch } from "react-icons/fa";
 
 export default function Navbar() {
   const { mutate, isPending } = useLogout();
@@ -16,45 +19,93 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      <div className="navbar bg-base-100 shadow-sm">
-        <div className="flex-1">
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+    <header>
+      {/* Barra superiore */}
+      {/* <div className="bg-base-200">
+        <div className="container mx-auto flex justify-around py-2">
+          <span>Aiuto e contatti</span>
+          <span>Spedizione gratuita oltre 49 €</span>
+          <span>Reso entro 30 giorni</span>
+          <span>Buoni regalo</span>
         </div>
-        {!isAuthenticated && !user && (
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn m-1">
-              Menu
+      </div> */}
+
+      {/* Navbar principale */}
+      <nav className="navbar bg-base-200 shadow-sm">
+        <div className="container mx-auto flex justify-between items-center">
+          {/* Logo */}
+          <div className="text-xl">
+           <Link to={"/"}>CraftMarket</Link> 
             </div>
-            <ul
-              tabIndex={-1}
-              className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-            >
-              <Link to={"/register"}>Registrati</Link>
-              <Link to={"/login"}>Accedi</Link>
-            </ul>
-          </div>
-        )}
-        {isAuthenticated && user && (
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn m-1">
-              Menu
-            </div>
-            <ul
-              tabIndex={-1}
-              className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
-            >
-              <button
-                className="btn"
-                disabled={isPending}
-                onClick={handleLogout}
+
+          {/* Ricerca */}
+          <div className="flex flex-col justify-center">
+            <label className="input">
+              <svg
+                className="h-[1em] opacity-50"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
               >
-                Logout
-              </button>
-            </ul>
+                <g
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  strokeWidth="2.5"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </g>
+              </svg>
+              <input type="search" required placeholder="Cerca" />
+            </label>
           </div>
-        )}
+
+          {/* Azioni utente */}
+          <div className="flex items-center gap-4">
+            <BsCart4 className="text-xl" />
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost">
+                <CgProfile className="text-2xl" />
+              </div>
+
+              <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
+                {!isAuthenticated ? (
+                  <>
+                    <li>
+                      <Link to="/login">Accedi</Link>
+                    </li>
+                    <li>
+                      <Link to="/register">Registrati</Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li>
+                      <Link to="/profile">Il mio profilo</Link>
+                    </li>
+                    <li>
+                      <button disabled={isPending} onClick={handleLogout}>
+                        Logout
+                      </button>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* Navigazione categorie */}
+      <div className="border-t">
+        <div className="container mx-auto flex justify-center gap-6 py-3">
+          <Link to={"/products"}>Tutti i prodotti</Link>
+          <span>Categorie</span>
+          <span>Novità</span>
+          <span>Offerte</span>
+        </div>
       </div>
-    </>
+    </header>
   );
 }
