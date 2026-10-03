@@ -21,7 +21,7 @@ export default function login() {
 
   const onSubmit = (data: LoginData) => {
     mutate(data, {
-      onError: (error) => {
+      onError: (error: unknown) => {
         // Verifico che l'errore provenga da Axios
         if (axios.isAxiosError(error)) {
           // Recupero gli errori di Laravel

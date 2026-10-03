@@ -45,6 +45,12 @@ export interface UpdatedProductData extends CreateProductData {
   remove_images: number[];
 }
 
+export interface CategorySelectorProps {
+    categories: Category[];
+    selectedCategories: number[];
+    onChange: (ids: number[]) => void;
+  }
+
 // Index
 export const getProducts = async (): Promise<Product[]> => {
   const response = await api.get("/products");
@@ -110,5 +116,11 @@ export const updateProduct = async (
 export const deleteProduct = async(slug: string) => {
    await getCsrfCookie();
    const response = await api.delete(`/api/products/${slug}`);
+   return response.data;
+}
+
+// Index categorie
+export const getCategories = async(): Promise<Category[]> => {
+   const response = await api.get("/api/categories");
    return response.data;
 }

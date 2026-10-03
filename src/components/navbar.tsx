@@ -85,6 +85,9 @@ export default function Navbar() {
                       <Link to="/profile">Il mio profilo</Link>
                     </li>
                     <li>
+                      <Link to="/products/create">Crea un articolo</Link>
+                    </li>
+                    <li>
                       <button disabled={isPending} onClick={handleLogout}>
                         Logout
                       </button>
