@@ -10,19 +10,18 @@ import { useCategories } from "../../hooks/queries/useCategories";
 import { ImageUploader } from "../../components/products/imageUploader";
 
 export default function CreateProduct() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const { mutate, isPending, isSuccess, isError, error } = useCreateProduct();
+  const { mutate } = useCreateProduct();
   const { data: categories = [], isLoading } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [images, setImages] = useState<File[]>([]);
+  const [flashMessage, setFlashMessage] = useState("");
 
   const {
     register,
     handleSubmit,
     setError,
     clearErrors,
-    watch,
+    setValue,
     formState: { errors },
   } = useForm<CreateProductData>();
 
@@ -45,12 +44,6 @@ export default function CreateProduct() {
             }
           }
         },
-        onSuccess: async () => {
-          await queryClient.invalidateQueries({
-            queryKey: ["products"],
-          });
-          navigate("/products");
-        },
       });
   };
 
@@ -64,7 +57,9 @@ export default function CreateProduct() {
                 <fieldset className="fieldset">
                   {/* Nome */}
                   {errors.name && (
-                    <span className="text-error text-sm">{errors.name.message}</span>
+                    <span className="text-error text-sm">
+                      {errors.name.message}
+                    </span>
                   )}
                   <input
                     type="text"
@@ -78,7 +73,9 @@ export default function CreateProduct() {
 
                   {/* Descrizione */}
                   {errors.description && (
-                    <span className="text-error text-sm">{errors.description.message}</span>
+                    <span className="text-error text-sm">
+                      {errors.description.message}
+                    </span>
                   )}
                   <textarea
                     className="textarea mb-5"
@@ -90,7 +87,9 @@ export default function CreateProduct() {
 
                   {/* Prezzo */}
                   {errors.price && (
-                    <span className="text-error text-sm">{errors.price.message}</span>
+                    <span className="text-error text-sm">
+                      {errors.price.message}
+                    </span>
                   )}
                   <input
                     type="number"
@@ -98,6 +97,7 @@ export default function CreateProduct() {
                     min="0"
                     placeholder="$Prezzo "
                     {...register("price", {
+                      valueAsNumber: true,
                       required: "Il prezzo è richiesto.",
                       min: {
                         value: 0,
@@ -108,7 +108,9 @@ export default function CreateProduct() {
 
                   {/* Stock */}
                   {errors.stock && (
-                    <span className="text-error text-sm">{errors.stock.message}</span>
+                    <span className="text-error text-sm">
+                      {errors.stock.message}
+                    </span>
                   )}
                   <input
                     type="number"
@@ -116,6 +118,7 @@ export default function CreateProduct() {
                     min="0"
                     placeholder="Stock"
                     {...register("stock", {
+                      valueAsNumber: true,
                       required: "Il numero di stock è richiesto.",
                       min: {
                         value: 0,
@@ -128,11 +131,20 @@ export default function CreateProduct() {
                 <CategorySelector
                   categories={categories}
                   selectedCategories={selectedCategories}
-                  onChange={setSelectedCategories}
+                  onChange={(ids) => {
+                    setSelectedCategories(ids);
+                    setValue("categories", ids);
+                  }}
                 />
                 <div className="mt-10  flex flex-col justify-center items-center">
-                  <ImageUploader images={images} onChange={setImages} />
-                  <button className="btn btn-neutral mt-8">
+                  <ImageUploader
+                    images={images}
+                    onChange={(files) => {
+                      setImages(files);
+                      setValue("images", files);
+                    }}
+                  />
+                  <button type="submit" className="btn btn-neutral mt-8">
                     Crea Prodotto
                   </button>
                 </div>
