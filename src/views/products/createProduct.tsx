@@ -7,6 +7,7 @@ import { useCreateProduct } from "../../hooks/mutations/useCreateProduct";
 import axios from "axios";
 import CategorySelector from "../../components/products/categorySelector";
 import { useCategories } from "../../hooks/queries/useCategories";
+import { ImageUploader } from "../../components/products/imageUploader";
 
 export default function CreateProduct() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function CreateProduct() {
   const { mutate, isPending, isSuccess, isError, error } = useCreateProduct();
   const { data: categories = [], isLoading } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+  const [images, setImages] = useState<File[]>([]);
 
   const {
     register,
@@ -53,59 +55,92 @@ export default function CreateProduct() {
   };
 
   return (
-    <main className="min-h-screen flex justify-center items-center">
-      <section>
-        <form>
-          <div className="hero bg-base-200 w-3/4 md:w-4xl rounded-box">
-            <div className="hero-content flex-col lg:flex-row-reverse w-3xl">
-              <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <div className="card-body">
-                  <fieldset className="fieldset">
-                    {/* Nome */}
-                    <input
-                      type="text"
-                      className="input"
-                      placeholder="Nome del Prodotto"
-                    />
-
-                    {/* Descrizione */}
-                    <textarea
-                      className="textarea"
-                      placeholder="Descrizione"
-                    ></textarea>
-
-                    {/* Prezzo */}
-                    <input
-                      type="number"
-                      className="input validator"
-                      min="0"
-                      placeholder="$Prezzo "
-                    />
-
-                    {/* Stock */}
-                    <input
-                      type="number"
-                      className="input validator"
-                      min="0"
-                      placeholder="Stock"
-                    />
-                  </fieldset>
-
-                  <CategorySelector
-                    categories={categories}
-                    selectedCategories={selectedCategories}
-                    onChange={setSelectedCategories}
+    <main className="min-h-screen w-full flex justify-center items-center">
+      <div className="hero bg-base-200 w-full max-w-4xl rounded-box">
+        <div className="hero-content flex-col lg:flex-row-reverse w-full">
+          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+            <div className="card-body">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <fieldset className="fieldset">
+                  {/* Nome */}
+                  {errors.name && (
+                    <span className="text-error text-sm">{errors.name.message}</span>
+                  )}
+                  <input
+                    type="text"
+                    className="input mb-5"
+                    placeholder="Nome del Prodotto"
+                    {...register("name", {
+                      required: "Il nome è obbligatorio.",
+                      onChange: () => clearErrors("name"),
+                    })}
                   />
 
-                  <button className="btn btn-neutral mt-4">
+                  {/* Descrizione */}
+                  {errors.description && (
+                    <span className="text-error text-sm">{errors.description.message}</span>
+                  )}
+                  <textarea
+                    className="textarea mb-5"
+                    placeholder="Descrizione"
+                    {...register("description", {
+                      required: "La descrizione è richiesta.",
+                    })}
+                  ></textarea>
+
+                  {/* Prezzo */}
+                  {errors.price && (
+                    <span className="text-error text-sm">{errors.price.message}</span>
+                  )}
+                  <input
+                    type="number"
+                    className="input mb-5 validator"
+                    min="0"
+                    placeholder="$Prezzo "
+                    {...register("price", {
+                      required: "Il prezzo è richiesto.",
+                      min: {
+                        value: 0,
+                        message: "Il prezzo non puo essere inferiore a 0.",
+                      },
+                    })}
+                  />
+
+                  {/* Stock */}
+                  {errors.stock && (
+                    <span className="text-error text-sm">{errors.stock.message}</span>
+                  )}
+                  <input
+                    type="number"
+                    className="input validator mb-5"
+                    min="0"
+                    placeholder="Stock"
+                    {...register("stock", {
+                      required: "Il numero di stock è richiesto.",
+                      min: {
+                        value: 0,
+                        message: "Lo stock non puo essere inferiore a 0",
+                      },
+                    })}
+                  />
+                </fieldset>
+
+                <CategorySelector
+                  categories={categories}
+                  selectedCategories={selectedCategories}
+                  onChange={setSelectedCategories}
+                />
+                <div className="mt-10  flex flex-col justify-center items-center">
+                  <ImageUploader images={images} onChange={setImages} />
+                  <button className="btn btn-neutral mt-8">
                     Crea Prodotto
                   </button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-        </form>
-      </section>
+        </div>
+      </div>
     </main>
   );
 }

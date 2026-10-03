@@ -32,15 +32,15 @@ export default function Navbar() {
 
       {/* Navbar principale */}
       <nav className="navbar bg-base-200 shadow-sm">
-        <div className="container mx-auto flex justify-between items-center">
+        <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
           <div className="text-xl">
            <Link to={"/"}>CraftMarket</Link> 
             </div>
 
           {/* Ricerca */}
-          <div className="flex flex-col justify-center">
-            <label className="input">
+          <div className="w-30 md:w-64">
+            <label className="input w-full">
               <svg
                 className="h-[1em] opacity-50"
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +65,8 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <BsCart4 className="text-xl" />
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost">
-                <CgProfile className="text-2xl" />
+              <div tabIndex={0} role="button" className="btn btn-ghost p-0">
+                <CgProfile className="text-2xl p-0" />
               </div>
 
               <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">

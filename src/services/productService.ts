@@ -51,6 +51,11 @@ export interface CategorySelectorProps {
     onChange: (ids: number[]) => void;
   }
 
+ export interface ImageUploaderProps {
+  images: File[];
+  onChange: (files: File[]) => void;
+}
+
 // Index
 export const getProducts = async (): Promise<Product[]> => {
   const response = await api.get("/products");

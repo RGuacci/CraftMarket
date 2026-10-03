@@ -12,7 +12,7 @@ const CategorySelector = ({
         <label className="label" key={category.id}>
           <input 
           type="checkbox" 
-          className="checkbox" 
+          className="checkbox p-3" 
           value={category.id}
           checked={selectedCategories.includes(category.id)}
           onChange = {(e) => {
