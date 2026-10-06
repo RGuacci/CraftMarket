@@ -10,11 +10,7 @@ export const useCreateProduct = () => {
     mutationFn: createProduct,
     onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
-      navigate("/products", {
-        state: {
-          flash: "Prodotto creato con successo!"
-        },
-      });
+      navigate("/products");
     },
   });
 };

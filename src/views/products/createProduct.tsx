@@ -14,7 +14,7 @@ export default function CreateProduct() {
   const { data: categories = [], isLoading } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [images, setImages] = useState<File[]>([]);
-  const [flashMessage, setFlashMessage] = useState("");
+  
 
   const {
     register,

@@ -46,24 +46,28 @@ export interface UpdatedProductData extends CreateProductData {
 }
 
 export interface CategorySelectorProps {
-    categories: Category[];
-    selectedCategories: number[];
-    onChange: (ids: number[]) => void;
-  }
+  categories: Category[];
+  selectedCategories: number[];
+  onChange: (ids: number[]) => void;
+}
 
- export interface ImageUploaderProps {
+export interface ImageUploaderProps {
   images: File[];
   onChange: (files: File[]) => void;
 }
 
+export interface CardProps {
+  product: Product;
+}
+
 // Index
 export const getProducts = async (): Promise<Product[]> => {
-  const response = await api.get("/products");
+  const response = await api.get("/api/products");
   return response.data;
 };
 
 // Create
-export const createProduct = async (productData: CreateProductData) => {
+export const createProduct = async (productData: CreateProductData): Promise<Product> => {
   await getCsrfCookie();
   const formData = new FormData();
 
@@ -83,7 +87,7 @@ export const createProduct = async (productData: CreateProductData) => {
 };
 
 // Show
-export const getProduct = async (slug: string) => {
+export const getProduct = async (slug: string): Promise<Product> => {
   const response = await api.get(`/api/products/${slug}`);
   return response.data;
 };
@@ -92,7 +96,7 @@ export const getProduct = async (slug: string) => {
 export const updateProduct = async (
   slug: string,
   productData: UpdatedProductData,
-) => {
+): Promise<Product> => {
   await getCsrfCookie();
   const formData = new FormData();
 
@@ -100,12 +104,12 @@ export const updateProduct = async (
   formData.append("description", productData.description);
   formData.append("price", String(productData.price));
   formData.append("stock", String(productData.stock));
-  //Nuove immagini   
+  //Nuove immagini
   productData.images.forEach((image) => {
     formData.append("images[]", image);
   });
   //Immagini da eliminare
-    productData.remove_images.forEach((id) => {
+  productData.remove_images.forEach((id) => {
     formData.append("images[]", String(id));
   });
 
@@ -113,19 +117,21 @@ export const updateProduct = async (
     formData.append("categories[]", String(category));
   });
 
-  const response = await api.put(`/api/products/${slug}`,formData);
+  const response = await api.put(`/api/products/${slug}`, formData);
   return response.data;
 };
 
 // Delete
-export const deleteProduct = async(slug: string) => {
-   await getCsrfCookie();
-   const response = await api.delete(`/api/products/${slug}`);
-   return response.data;
-}
+export const deleteProduct = async (slug: string) => {
+  await getCsrfCookie();
+  const response = await api.delete(`/api/products/${slug}`);
+  return response.data;
+};
 
 // Index categorie
-export const getCategories = async(): Promise<Category[]> => {
-   const response = await api.get("/api/categories");
-   return response.data;
-}
+export const getCategories = async (): Promise<Category[]> => {
+  const response = await api.get("/api/categories");
+  return response.data;
+};
+
+
