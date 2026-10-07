@@ -32,6 +32,14 @@ export interface Product {
   updated_at: string;
 }
 
+export interface PaginatedProducts {
+  current_page: number;
+  data: Product[];
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
 export interface CreateProductData {
   name: string;
   description: string;
@@ -61,8 +69,12 @@ export interface CardProps {
 }
 
 // Index
-export const getProducts = async (): Promise<Product[]> => {
-  const response = await api.get("/api/products");
+export const getProducts = async (page: number): Promise<PaginatedProducts> => {
+  const response = await api.get("/api/products",{
+    params: {
+      page,
+    },
+  });
   return response.data;
 };
 

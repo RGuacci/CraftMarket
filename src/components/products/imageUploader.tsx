@@ -28,7 +28,7 @@ export const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
       {error && <p className="text-error text-sm mt-2">{error}</p>}
       <input
         type="file"
-        className="file-input file-input-ghost"
+        className="file-input file-input-neutral"
         multiple
         accept="image/*"
         onChange={(e) => {
@@ -39,7 +39,7 @@ export const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
             e.target.value = "";
             return;
           }
-          
+
           // Controllo peso delle immagini
           const hasOversizedFiles = files.some(
             (file) => file.size > 5 * 1024 * 1024,
@@ -51,13 +51,17 @@ export const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
           }
 
           // Controllo formato delle immagini
-          const hasInvalidFormat = files.some((file) => !allowedTypes.includes(file.type));
-          if(hasInvalidFormat){
-            setError("I formati supportati sono : JPG, JPEG, PNG, WEBP, GIF, AVIF o BMP.");
+          const hasInvalidFormat = files.some(
+            (file) => !allowedTypes.includes(file.type),
+          );
+          if (hasInvalidFormat) {
+            setError(
+              "I formati supportati sono : JPG, JPEG, PNG, WEBP, GIF, AVIF o BMP.",
+            );
             e.target.value = "";
             return;
           }
-          
+
           setError(null);
           onChange([...images, ...files]);
           e.target.value = "";

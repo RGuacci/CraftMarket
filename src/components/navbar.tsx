@@ -31,11 +31,11 @@ export default function Navbar() {
       </div> */}
 
       {/* Navbar principale */}
-      <nav className="navbar bg-base-200 shadow-sm">
+      <nav className="navbar bg-base-100 shadow-sm">
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
-          <div className="text-xl">
-           <Link to={"/"}>CraftMarket</Link> 
+          <div className="text-xl font-bold">
+           <Link to={"/"}>Satisfy</Link> 
             </div>
 
           {/* Ricerca */}
@@ -63,7 +63,7 @@ export default function Navbar() {
 
           {/* Azioni utente */}
           <div className="flex items-center gap-4">
-            <BsCart4 className="text-xl" />
+            <BsCart4 className="text-2xl" />
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost p-0">
                 <CgProfile className="text-2xl p-0" />
@@ -101,7 +101,7 @@ export default function Navbar() {
       </nav>
 
       {/* Navigazione categorie */}
-      <div className="border-t">
+      <div className="border-t border-base-300">
         <div className="container mx-auto flex justify-center gap-6 py-3">
           <Link to={"/products"}>Tutti i prodotti</Link>
           <span>Categorie</span>

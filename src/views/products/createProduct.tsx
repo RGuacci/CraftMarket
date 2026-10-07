@@ -48,10 +48,10 @@ export default function CreateProduct() {
   };
 
   return (
-    <main className="min-h-screen w-full flex justify-center items-center">
-      <div className="hero bg-base-200 w-full max-w-4xl rounded-box">
+    <section className="min-h-screen w-full flex justify-center items-center">
+      <div className="hero bg-base-100 w-full max-w-4xl rounded-box">
         <div className="hero-content flex-col lg:flex-row-reverse w-full">
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-lg">
             <div className="card-body">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset className="fieldset">
@@ -144,7 +144,7 @@ export default function CreateProduct() {
                       setValue("images", files);
                     }}
                   />
-                  <button type="submit" className="btn btn-neutral mt-8">
+                  <button type="submit" className="btn btn-primary mt-8">
                     Crea Prodotto
                   </button>
                 </div>
@@ -153,6 +153,6 @@ export default function CreateProduct() {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }

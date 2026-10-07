@@ -7,7 +7,7 @@ function MainLayout() {
     <>
       <Navbar />
 
-      <main>
+      <main className="bg-base-100 min-h-screen">
         <Outlet />
       </main>
 
