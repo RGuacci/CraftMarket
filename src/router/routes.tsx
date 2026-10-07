@@ -13,6 +13,8 @@ import EditProduct from '../views/products/editProduct';
 
 import Login from '../views/auth/login';
 import Register from '../views/auth/register';
+import Profile from "../views/auth/profile";
+import Seller from "../views/auth/seller";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      {
+        path: "/profile",
+        element: <Profile />
+      },
+      {
+        path: "/seller",
+        element: <Seller />
+      }
     ],
   },
   {

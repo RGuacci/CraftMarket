@@ -70,7 +70,7 @@ export interface CardProps {
 
 // Index
 export const getProducts = async (page: number): Promise<PaginatedProducts> => {
-  const response = await api.get("/api/products",{
+  const response = await api.get("/api/products", {
     params: {
       page,
     },
@@ -79,7 +79,9 @@ export const getProducts = async (page: number): Promise<PaginatedProducts> => {
 };
 
 // Create
-export const createProduct = async (productData: CreateProductData): Promise<Product> => {
+export const createProduct = async (
+  productData: CreateProductData,
+): Promise<Product> => {
   await getCsrfCookie();
   const formData = new FormData();
 
@@ -146,4 +148,9 @@ export const getCategories = async (): Promise<Category[]> => {
   return response.data;
 };
 
+// Prodotti di um utente
+export const getMyProducts = async (): Promise<Product[]> => {
+  const response = await api.get("/api/seller/products");
 
+  return response.data;
+};

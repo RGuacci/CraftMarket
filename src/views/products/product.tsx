@@ -18,8 +18,8 @@ export default function Product() {
 
   return (
     <>
-      <div className="lg:min-h-screen lg:flex lg:items-center">
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 m-5 p-5 h-full">
+      <div className="lg:min-h-screen lg:flex lg:items-center justify-center">
+        <section className="grid grid-cols-1 lg:grid-cols-2 lg:items-stretch gap-6 m-5 p-5">
           <ProductGallery product={product} />
           <ProductInfo product={product} />
         </section>

@@ -7,7 +7,7 @@ interface ProductInfoProps {
 export default function ProductInfo({ product }: ProductInfoProps) {
   return (
     <>
-      <div className="flex flex-col gap-6 h-full items-center bg-base-200 p-5 shadow-lg">
+      <div className="flex flex-col gap-6 items-center p-5 shadow-lg">
         {/* Titolo */}
         <div>
           
@@ -50,7 +50,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
         {/* Azione */}
         <button
-          className="btn btn-primary w-full lg:w-2/4 mt-auto mx-start"
+          className="btn btn-primary w-full lg:w-2/4 mt-auto"
           disabled={product.stock === 0}
         >
           Aggiungi al carrello

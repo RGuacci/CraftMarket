@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/authContext";
 import { CgProfile } from "react-icons/cg";
 import { BsCart4 } from "react-icons/bs";
-import { FaSearch } from "react-icons/fa";
+import type { User } from "../services/authService";
 
 export default function Navbar() {
   const { mutate, isPending } = useLogout();
@@ -35,8 +35,8 @@ export default function Navbar() {
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
           <div className="text-xl font-bold">
-           <Link to={"/"}>Satisfy</Link> 
-            </div>
+            <Link to={"/"}>Satisfy</Link>
+          </div>
 
           {/* Ricerca */}
           <div className="w-30 md:w-64">
@@ -87,6 +87,12 @@ export default function Navbar() {
                     <li>
                       <Link to="/products/create">Crea un articolo</Link>
                     </li>
+                    <span className="divider divider-neutral my-0"></span>
+                    {user?.role === "seller" && (
+                      <li>
+                        <Link to="/seller">Pagina Venditore</Link>
+                      </li>
+                    )}
                     <li>
                       <button disabled={isPending} onClick={handleLogout}>
                         Logout
