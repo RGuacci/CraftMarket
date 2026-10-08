@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 export default function EditProduct() {
   const { slug } = useParams();
   const { data: product, isLoading, isError } = useProduct(slug!);
-  const { mutate } = useUpdateProduct();
+  const { mutate, isPending } = useUpdateProduct();
   const { data: categories = [] } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [images, setImages] = useState<File[]>([]);
@@ -193,8 +193,16 @@ export default function EditProduct() {
                     <button
                       type="submit"
                       className="btn btn-primary my-5 mx-auto"
+                      disabled={isPending}
                     >
-                      Modifica
+                    {isPending ? (
+                      <>
+                      <span className="loading loading-spinner" />
+                      Salvataggio...
+                      </>
+                    ) : (
+                      "Salva Modifiche"
+                    )}
                     </button>
                   </div>
                 </form>

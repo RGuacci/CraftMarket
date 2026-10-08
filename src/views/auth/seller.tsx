@@ -3,21 +3,33 @@ import { useMyProducts } from "../../hooks/queries/useMyProducts";
 import ProductsTable from "../../components/products/productsTable";
 import ProductsCardsTable from "../../components/products/productsCardsTable";
 import { useDeleteProduct } from "../../hooks/mutations/useDeleteProduct";
+import { useState } from "react";
+import type { Product } from "../../services/productService";
+import DeleteProductModal from "../../components/products/deleteProductModal";
 
 export default function Seller() {
   const { data: user } = useUser();
   const { data: products, isLoading, isError } = useMyProducts();
+  const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const { mutate: deleteProduct } = useDeleteProduct();
 
-  const handleDelete = (slug: string) => {
-    const confirmed = window.confirm("Sei sicuro di voler eliminare questo articolo?")
+  const handleOpenDeleteModal = (product: Product) => {
+    setProductToDelete(product);
+  };
 
-    if(!confirmed){
+  const handleDelete = () => {
+    if (!productToDelete) {
       return;
-    };
-    
-    deleteProduct(slug);
- }
+    }
+    setDeletingSlug(productToDelete.slug);
+    deleteProduct(productToDelete.slug, {
+      onSettled: () => {
+        setDeletingSlug(null);
+        setProductToDelete(null);
+      },
+    });
+  };
 
   if (isLoading) {
     return <span className="loading loading-spinner"></span>;
@@ -43,18 +55,25 @@ export default function Seller() {
       </div>
 
       <div className="hidden md:block md:w-3/4 mx-auto">
-        <ProductsTable 
-        products={products} 
-        onDelete={handleDelete}
+        <ProductsTable
+          products={products}
+          onDelete={handleOpenDeleteModal}
+          deletingSlug={deletingSlug}
         />
       </div>
 
       <div className="md:hidden">
-        <ProductsCardsTable 
-        products={products} 
-        onDelete={handleDelete}
+        <ProductsCardsTable
+          products={products}
+          onDelete={handleOpenDeleteModal}
+          deletingSlug={deletingSlug}
         />
       </div>
+      <DeleteProductModal
+        product={productToDelete}
+        onClose={() => setProductToDelete(null)}
+        onConfirm={handleDelete}
+      />
     </section>
   );
 }

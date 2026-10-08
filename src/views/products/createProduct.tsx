@@ -6,12 +6,14 @@ import axios from "axios";
 import CategorySelector from "../../components/products/categorySelector";
 import { useCategories } from "../../hooks/queries/useCategories";
 import  ImageUploader from "../../components/products/imageUploader";
+import { useNavigate } from "react-router";
 
 export default function CreateProduct() {
   const { mutate } = useCreateProduct();
   const { data: categories = [], isLoading } = useCategories();
   const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
   const [images, setImages] = useState<File[]>([]);
+  const navigate = useNavigate();
   
 
   const {
@@ -26,6 +28,10 @@ export default function CreateProduct() {
   const onSubmit = (data: CreateProductData) => {
     (mutate(data),
       {
+        onSuccess: () => {
+          navigate("/products")
+        },
+
         onError: (error: unknown) => {
           if (axios.isAxiosError(error)) {
             const errors = error.response?.data.errors;
