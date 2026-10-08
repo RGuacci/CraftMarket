@@ -6,13 +6,16 @@ import { useDeleteProduct } from "../../hooks/mutations/useDeleteProduct";
 import { useState } from "react";
 import type { Product } from "../../services/productService";
 import DeleteProductModal from "../../components/products/deleteProductModal";
+import { getErrorMessage } from "../../utils/errorHandler";
+import { useFlashMessage } from "../../contexts/flashMessageContext";
 
 export default function Seller() {
   const { data: user } = useUser();
   const { data: products, isLoading, isError } = useMyProducts();
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-  const { mutate: deleteProduct } = useDeleteProduct();
+  const { mutate: deleteProduct, error } = useDeleteProduct();
+  const { showFlash } = useFlashMessage();
 
   const handleOpenDeleteModal = (product: Product) => {
     setProductToDelete(product);
@@ -22,11 +25,22 @@ export default function Seller() {
     if (!productToDelete) {
       return;
     }
+    
     setDeletingSlug(productToDelete.slug);
+  
     deleteProduct(productToDelete.slug, {
+      onSuccess: () => {
+        setProductToDelete(null);
+        showFlash("Articolo eliminato con successo.","success");
+      },
+
+      onError: (error) => {
+        const message = getErrorMessage(error);
+        showFlash(message, "error");
+      },
+
       onSettled: () => {
         setDeletingSlug(null);
-        setProductToDelete(null);
       },
     });
   };

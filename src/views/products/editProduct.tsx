@@ -10,6 +10,8 @@ import CategorySelector from "../../components/products/categorySelector";
 import ExistingImages from "../../components/products/existingImages";
 import ImageUploader from "../../components/products/imageUploader";
 import { useNavigate } from "react-router";
+import { getErrorMessage } from "../../utils/errorHandler";
+import { useFlashMessage } from "../../contexts/flashMessageContext";
 
 export default function EditProduct() {
   const { slug } = useParams();
@@ -20,6 +22,7 @@ export default function EditProduct() {
   const [images, setImages] = useState<File[]>([]);
   const [removeImages, setRemoveImages] = useState<number[]>([]);
   const navigate = useNavigate();
+  const { showFlash } = useFlashMessage();
 
   const {
     register,
@@ -58,6 +61,7 @@ export default function EditProduct() {
       { slug, productData },
       {
         onSuccess: (updatedProduct) => {
+          showFlash("Articolo aggiornato con successo!", "success");
           navigate(`/products/${updatedProduct.slug}`);
         },
 
@@ -74,8 +78,11 @@ export default function EditProduct() {
                   });
                 },
               );
+
+              return;
             }
           }
+          showFlash(getErrorMessage(error), "error");
         },
       },
     );
@@ -195,14 +202,14 @@ export default function EditProduct() {
                       className="btn btn-primary my-5 mx-auto"
                       disabled={isPending}
                     >
-                    {isPending ? (
-                      <>
-                      <span className="loading loading-spinner" />
-                      Salvataggio...
-                      </>
-                    ) : (
-                      "Salva Modifiche"
-                    )}
+                      {isPending ? (
+                        <>
+                          <span className="loading loading-spinner" />
+                          Salvataggio...
+                        </>
+                      ) : (
+                        "Salva Modifiche"
+                      )}
                     </button>
                   </div>
                 </form>
