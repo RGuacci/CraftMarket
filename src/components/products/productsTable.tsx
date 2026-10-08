@@ -3,9 +3,13 @@ import { Link } from "react-router";
 
 interface ProductsTableProps {
   products: Product[];
+  onDelete: (slug: string) => void;
 }
 
-export default function ProductsTable({ products }: ProductsTableProps) {
+export default function ProductsTable({
+  products,
+  onDelete,
+}: ProductsTableProps) {
   return (
     <>
       <div className="overflow-x-auto">
@@ -52,9 +56,19 @@ export default function ProductsTable({ products }: ProductsTableProps) {
 
                 <td>
                   <div className="flex gap-2">
-                    <Link to={`/products/${product.slug}/edit`} className="btn btn-warning btn-sm">Modifica</Link>
+                    <Link
+                      to={`/products/${product.slug}/edit`}
+                      className="btn btn-warning btn-sm"
+                    >
+                      Modifica
+                    </Link>
 
-                    <button className="btn btn-error btn-sm">Elimina</button>
+                    <button
+                      className="btn btn-error btn-sm"
+                      onClick={() => onDelete(product.slug)}
+                    >
+                      Elimina
+                    </button>
                   </div>
                 </td>
               </tr>

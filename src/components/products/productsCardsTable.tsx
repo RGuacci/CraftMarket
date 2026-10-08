@@ -3,10 +3,12 @@ import { Link } from "react-router";
 
 interface ProductsCardsTableProps {
   products: Product[];
+  onDelete: (slug: string) => void;
 }
 
 export default function ProductsCardsTable({
   products,
+  onDelete,
 }: ProductsCardsTableProps) {
   return (
     <>
@@ -42,8 +44,18 @@ export default function ProductsCardsTable({
                 </div>
               </div>
               <div className="card-actions justify-end mt-5">
-                 <Link to={`/products/${product.slug}/edit`} className="btn btn-warning btn-sm">Modifica</Link>
-                <button className="btn btn-error btn-sm">Elimina</button>
+                <Link
+                  to={`/products/${product.slug}/edit`}
+                  className="btn btn-warning btn-sm"
+                >
+                  Modifica
+                </Link>
+                <button
+                  className="btn btn-error btn-sm"
+                  onClick={() => onDelete(product.slug)}
+                >
+                  Elimina
+                </button>
               </div>
             </div>
           </div>
