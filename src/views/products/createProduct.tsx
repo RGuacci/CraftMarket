@@ -1,13 +1,11 @@
 import { useState } from "react";
 import type { CreateProductData } from "../../services/productService";
-import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { useCreateProduct } from "../../hooks/mutations/useCreateProduct";
 import axios from "axios";
 import CategorySelector from "../../components/products/categorySelector";
 import { useCategories } from "../../hooks/queries/useCategories";
-import { ImageUploader } from "../../components/products/imageUploader";
+import  ImageUploader from "../../components/products/imageUploader";
 
 export default function CreateProduct() {
   const { mutate } = useCreateProduct();
@@ -48,6 +46,8 @@ export default function CreateProduct() {
   };
 
   return (
+    <>
+    <h1 className="text-center my-5 text-5xl">Crea Articolo</h1>
     <section className="min-h-screen w-full flex justify-center items-center">
       <div className="hero bg-base-100 w-full max-w-4xl rounded-box">
         <div className="hero-content flex-col lg:flex-row-reverse w-full">
@@ -154,5 +154,6 @@ export default function CreateProduct() {
         </div>
       </div>
     </section>
+    </>
   );
 }

@@ -64,6 +64,12 @@ export interface ImageUploaderProps {
   onChange: (files: File[]) => void;
 }
 
+export interface ExistingImagesProps {
+  images: ProductImages[];
+  removeImages: number[];
+  onRemove: (id: number) => void;
+}
+
 export interface CardProps {
   product: Product;
 }
@@ -124,7 +130,7 @@ export const updateProduct = async (
   });
   //Immagini da eliminare
   productData.remove_images.forEach((id) => {
-    formData.append("images[]", String(id));
+    formData.append("remove_images[]", String(id));
   });
 
   productData.categories.forEach((category) => {

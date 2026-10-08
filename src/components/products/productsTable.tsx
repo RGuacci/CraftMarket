@@ -1,4 +1,5 @@
 import type { Product } from "../../services/productService";
+import { Link } from "react-router";
 
 interface ProductsTableProps {
   products: Product[];
@@ -51,7 +52,7 @@ export default function ProductsTable({ products }: ProductsTableProps) {
 
                 <td>
                   <div className="flex gap-2">
-                    <button className="btn btn-warning btn-sm">Modifica</button>
+                    <Link to={`/products/${product.slug}/edit`} className="btn btn-warning btn-sm">Modifica</Link>
 
                     <button className="btn btn-error btn-sm">Elimina</button>
                   </div>

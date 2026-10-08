@@ -1,7 +1,7 @@
 import type { ImageUploaderProps } from "../../services/productService";
 import { useState, useEffect } from "react";
 
-export const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
+const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -90,3 +90,5 @@ export const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
     </>
   );
 };
+
+export default ImageUploader;

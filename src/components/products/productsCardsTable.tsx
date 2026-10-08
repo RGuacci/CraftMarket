@@ -1,4 +1,5 @@
 import type { Product } from "../../services/productService";
+import { Link } from "react-router";
 
 interface ProductsCardsTableProps {
   products: Product[];
@@ -41,7 +42,7 @@ export default function ProductsCardsTable({
                 </div>
               </div>
               <div className="card-actions justify-end mt-5">
-                <button className="btn btn-primary btn-sm">Modifica</button>
+                 <Link to={`/products/${product.slug}/edit`} className="btn btn-warning btn-sm">Modifica</Link>
                 <button className="btn btn-error btn-sm">Elimina</button>
               </div>
             </div>
