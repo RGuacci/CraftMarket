@@ -1,21 +1,6 @@
 import { api } from "../api/axios";
 import { getCsrfCookie } from "../api/csrf";
-import axios from "axios";
 import type { User } from "./authService";
-
-export interface Category {
-  id: number;
-  name: string;
-  slug: string;
-}
-
-export interface ProductImages {
-  id: number;
-  product_id: number;
-  path: string;
-  created_at: string;
-  updated_at: string;
-}
 
 export interface Product {
   id: number;
@@ -25,7 +10,6 @@ export interface Product {
   price: number;
   stock: number;
   user: User;
-  user_id: number;
   categories: Category[];
   images: ProductImages[];
   created_at: string;
@@ -33,11 +17,22 @@ export interface Product {
 }
 
 export interface PaginatedProducts {
-  current_page: number;
   data: Product[];
-  last_page: number;
-  per_page: number;
-  total: number;
+  links: {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    from: number | null;
+    to: number | null;
+    path: string;
+  }
 }
 
 export interface CreateProductData {
@@ -53,11 +48,32 @@ export interface UpdatedProductData extends CreateProductData {
   remove_images: number[];
 }
 
+
+export type ProductFormData = Omit<CreateProductData, "categories" | "images">;
+
 export interface CategorySelectorProps {
   categories: Category[];
   selectedCategories: number[];
   onChange: (ids: number[]) => void;
 }
+
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+}
+
+
+
+export interface ProductImages {
+  id: number;
+  product_id: number;
+  path: string;
+  created_at: string;
+  updated_at: string;
+}
+
 
 export interface ImageUploaderProps {
   images: File[];
@@ -76,9 +92,9 @@ export interface CardProps {
 
 // Index
 export const getProducts = async (page: number): Promise<PaginatedProducts> => {
-  const response = await api.get("/api/products", {
+  const response = await api.get<PaginatedProducts>("/api/products", {
     params: {
-      page,
+     params: { page },
     },
   });
   return response.data;
@@ -109,7 +125,7 @@ export const createProduct = async (
 // Show
 export const getProduct = async (slug: string): Promise<Product> => {
   const response = await api.get(`/api/products/${slug}`);
-  return response.data;
+  return response.data.data;
 };
 
 // Update

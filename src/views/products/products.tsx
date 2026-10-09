@@ -20,7 +20,7 @@ export default function Products() {
 
   // Generazione dei numeri per la paginazione
   const pages = Array.from(
-    { length: products.last_page },
+    { length: products.meta.last_page },
     (_, index) => index + 1,
   );
 
@@ -58,7 +58,7 @@ export default function Products() {
             <button
               className="join-item btn bg-primary text-primary-content"
               onClick={() => setPage(page + 1)}
-              disabled={page === products.last_page}
+              disabled={page === products.meta.last_page}
             >
               »
             </button>

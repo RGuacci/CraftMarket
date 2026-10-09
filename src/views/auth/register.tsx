@@ -2,13 +2,16 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useRegister } from "../../hooks/mutations/useRegister";
 import type { RegisterData } from "../../services/authService";
-import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { handleServerValidation } from "../../utils/serverValidation";
+import { useFlashMessage } from "../../contexts/flashMessageContext";
+import { getErrorMessage } from "../../utils/errorHandler";
 
 export default function Register() {
   const navigate = useNavigate();
-  const { mutate, isPending, isSuccess, isError, error } = useRegister();
+  const { mutate, isPending } = useRegister();
   const queryClient = useQueryClient();
+  const { showFlash } = useFlashMessage();
 
   const {
     register,
@@ -22,29 +25,16 @@ export default function Register() {
   const onSubmit = (data: RegisterData) => {
     mutate(data, {
       onError: (error: unknown) => {
-        // Verifico che l'errore provenga da Axios
-        if (axios.isAxiosError(error)) {
-          // Recupero gli errori di Laravel
-          const errors = error.response?.data.errors;
+        const handled = handleServerValidation(error, setError);
 
-          if (errors) {
-            // Trasformo l'oggetto in coppie campo, messaggi
-            Object.entries(errors as Record<string, string[]>).forEach(
-              ([field, messages]) => {
-                // Associo infine l'errore al campo corrispondente nel react hook form
-                setError(field as keyof RegisterData, {
-                  type: "server",
-                  message: messages[0],
-                });
-              },
-            );
-          }
+        if (!handled) {
+          showFlash(getErrorMessage(error), "error");
         }
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
-          queryKey:["user"],
-        })
+          queryKey: ["user"],
+        });
         navigate("/");
       },
     });
@@ -123,7 +113,7 @@ export default function Register() {
                       </span>
                     )}
                   </div>
-                  
+
                   {/* Conferma Password */}
                   <input
                     type="password"
@@ -145,7 +135,8 @@ export default function Register() {
 
                   <div>
                     <Link to="/login" className="link link-hover">
-                      Hai gia un account? <span className="font-bold">Accedi</span>
+                      Hai gia un account?{" "}
+                      <span className="font-bold">Accedi</span>
                     </Link>
                   </div>
                   <button

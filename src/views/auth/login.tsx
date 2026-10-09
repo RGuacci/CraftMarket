@@ -2,45 +2,34 @@ import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router";
 import { useLogin } from "../../hooks/mutations/useLogin";
 import type { LoginData } from "../../services/authService";
-import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import { handleServerValidation } from "../../utils/serverValidation";
+import { useFlashMessage } from "../../contexts/flashMessageContext";
+import { getErrorMessage } from "../../utils/errorHandler";
 
-export default function login() {
+export default function Login() {
   const navigate = useNavigate();
-  const { mutate, isPending, isSuccess, isError, error } = useLogin();
-   const queryClient = useQueryClient();
+  const { mutate, isPending } = useLogin();
+  const queryClient = useQueryClient();
+  const { showFlash } = useFlashMessage();
 
   const {
     register,
     handleSubmit,
     setError,
     clearErrors,
-    watch,
     formState: { errors },
   } = useForm<LoginData>();
 
   const onSubmit = (data: LoginData) => {
     mutate(data, {
       onError: (error: unknown) => {
-        // Verifico che l'errore provenga da Axios
-        if (axios.isAxiosError(error)) {
-          // Recupero gli errori di Laravel
-          const errors = error.response?.data.errors;
-
-          if (errors) {
-            // Trasformo l'oggetto in coppie campo, messaggi
-            Object.entries(errors as Record<string, string[]>).forEach(
-              ([field, messages]) => {
-                // Associo infine l'errore al campo corrispondente nel react hook form
-                setError(field as keyof LoginData, {
-                  type: "server",
-                  message: messages[0],
-                });
-              },
-            );
-          }
-        }
-      },
+             const handled = handleServerValidation(error, setError);
+     
+             if (!handled) {
+               showFlash(getErrorMessage(error), "error");
+             }
+           },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
           queryKey: ["user"],
@@ -90,11 +79,6 @@ export default function login() {
                     placeholder="Password"
                     {...register("password", {
                       required: "La password è obbligatoria",
-                      minLength: {
-                        value: 8,
-                        message:
-                          "La password deve essere lunga almeno 8 caratteri",
-                      },
                       onChange: () => clearErrors("password"),
                     })}
                   />
