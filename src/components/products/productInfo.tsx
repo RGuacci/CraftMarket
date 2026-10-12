@@ -61,9 +61,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
         </div>
 
         {/* Azioni */}
-        <div className="mt-auto grid grid-cols-2 gap-3 pt-4">
+        <div className="mt-auto grid grid-cols-2 gap-2 pt-4 sm:gap-3">
           <button
-            className="btn btn-outline btn-primary"
+            className="btn btn-outline btn-primary min-w-0 gap-1 px-1 sm:gap-2 sm:px-3"
             disabled={product.stock === 0 || addToCart.isPending}
             onClick={() =>
               addToCart.mutate({
@@ -72,8 +72,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
               })
             }
           >
-            <BsCartCheck className="text-xl shrink-0" />
-            <span className="text-sm">
+            <BsCartCheck className="text-base shrink-0 sm:text-xl" />
+
+            <span className="text-xs leading-tight sm:text-sm">
               {addToCart.isPending
                 ? "Aggiunta in corso..."
                 : "Aggiungi al carrello"}
@@ -81,11 +82,12 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           </button>
 
           <button
-            className="btn btn-primary gap-2 px-2"
+            className="btn btn-primary min-w-0 gap-1 px-1 sm:gap-2 sm:px-3"
             disabled={product.stock === 0}
           >
-            <FaShoppingBag className="text-lg shrink-0" />
-            <span className="text-sm">Compra ora</span>
+            <FaShoppingBag className="text-base shrink-0 sm:text-lg" />
+
+            <span className="text-xs leading-tight sm:text-sm">Compra ora</span>
           </button>
         </div>
       </div>

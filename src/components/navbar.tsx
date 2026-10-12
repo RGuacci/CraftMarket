@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/authContext";
 import { CgProfile } from "react-icons/cg";
 import { BsCart4 } from "react-icons/bs";
-import type { User } from "../services/authService";
+import { useCart } from "../hooks/queries/useCart";
 
 export default function Navbar() {
   const { mutate, isPending } = useLogout();
   const { user, isAuthenticated } = useAuth();
+  const { data: cart } = useCart();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -17,6 +18,9 @@ export default function Navbar() {
       },
     });
   };
+
+  const cartCount =
+    cart?.items.reduce((total, item) => total + item.quantity, 0) ?? 0;
 
   return (
     <header>
@@ -63,7 +67,19 @@ export default function Navbar() {
 
           {/* Azioni utente */}
           <div className="flex items-center gap-4">
-            <BsCart4 className="text-2xl" />
+            {/* Carrello */}
+            <Link
+              to="/cart"
+              className="indicator btn btn-ghost btn-circle"
+              aria-label={`Carrello, ${cartCount} articoli`}
+            >
+              <span className="indicator-item badge badge-primary badge-sm">
+                {cartCount}
+              </span>
+              <BsCart4 className="text-2xl" />
+            </Link>
+
+            {/* Profilo */}
             <div className="dropdown dropdown-end">
               <div tabIndex={0} role="button" className="btn btn-ghost p-0">
                 <CgProfile className="text-2xl p-0" />

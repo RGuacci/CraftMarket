@@ -25,14 +25,23 @@ export const getCart = async (): Promise<Cart> => {
 };
 
 // Aggiunta prodotto al carrello
-export const addToCart = async (
-  productData: AddToCartData,
-) => {
+export const addToCart = async (productData: AddToCartData) => {
   await getCsrfCookie();
 
   const response = await api.post("/api/cart/products", {
     product_id: productData.product_id,
     quantity: productData.quantity ?? 1,
+  });
+
+  return response.data;
+};
+
+// Modifica qauntità prodotti nel carrello
+export const updateCartItem = async (productId: number, quantity: number) => {
+  await getCsrfCookie();
+
+  const response = await api.patch(`/api/cart/products/${productId}`, {
+    quantity,
   });
 
   return response.data;

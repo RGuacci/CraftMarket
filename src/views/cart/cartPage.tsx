@@ -1,11 +1,19 @@
 import { Link } from "react-router";
 import { BsCartCheck } from "react-icons/bs";
-import { FaTrashAlt } from "react-icons/fa";
 import { useCart } from "../../hooks/queries/useCart";
 import { getImageUrl } from "../../utils/images";
+import { useUpdateCartItem } from "../../hooks/mutations/useUpdateCartItem";
 
 export default function CartPage() {
   const { data: cart, isPending, isError } = useCart();
+  const updateCart = useUpdateCartItem();
+
+  const handleUpdate = (productId: number, quantity: number) => {
+    updateCart.mutate({
+      productId,
+      quantity,
+    });
+  };
 
   if (isPending) {
     return (
@@ -42,17 +50,14 @@ export default function CartPage() {
   }
 
   const total = cart.items.reduce(
-    (sum, item) =>
-      sum + Number(item.product.price) * item.quantity,
+    (sum, item) => sum + Number(item.product.price) * item.quantity,
     0,
   );
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Il tuo carrello
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight">Il tuo carrello</h1>
 
         <p className="mt-2 text-base-content/60">
           {cart.items.length}{" "}
@@ -107,9 +112,42 @@ export default function CartPage() {
                     </p>
 
                     <div className="mt-1 flex items-center gap-3">
-                      <span className="text-sm text-base-content/60">
-                        Quantità: {item.quantity}
-                      </span>
+                      <div className="mt-1 flex items-center gap-3">
+                        <span className="text-sm text-base-content/60">
+                          Quantità
+                        </span>
+
+                        <div className="join">
+                          <button
+                            className="btn btn-sm join-item btn-outline btn-primary"
+                            disabled={updateCart.isPending}
+                            onClick={() =>
+                              handleUpdate(item.product.id, item.quantity - 1)
+                            }
+                            aria-label="Diminuisci quantità"
+                          >
+                            −
+                          </button>
+
+                          <span className="btn btn-sm join-item pointer-events-none">
+                            {item.quantity}
+                          </span>
+
+                          <button
+                            className="btn btn-sm join-item btn-outline btn-primary"
+                            disabled={
+                              updateCart.isPending ||
+                              item.quantity >= item.product.stock
+                            }
+                            onClick={() =>
+                              handleUpdate(item.product.id, item.quantity + 1)
+                            }
+                            aria-label="Aumenta quantità"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
 
                       <button
                         type="button"
@@ -117,20 +155,15 @@ export default function CartPage() {
                         aria-label={`Rimuovi ${product.name}`}
                         disabled
                         title="Rimozione non ancora disponibile"
-                      >
-                        <FaTrashAlt />
-                      </button>
+                      ></button>
                     </div>
                   </div>
 
                   <div className="hidden shrink-0 text-right sm:block">
-                    <p className="text-sm text-base-content/60">
-                      Subtotale
-                    </p>
+                    <p className="text-sm text-base-content/60">Subtotale</p>
 
                     <p className="text-lg font-bold">
-                      €{" "}
-                      {(Number(product.price) * item.quantity).toFixed(2)}
+                      € {(Number(product.price) * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -146,7 +179,9 @@ export default function CartPage() {
 
             <div className="flex justify-between gap-4 text-base-content/70">
               <span>Prodotti</span>
-              <span>{cart.items.reduce((sum, item) => sum + item.quantity, 0)}</span>
+              <span>
+                {cart.items.reduce((sum, item) => sum + item.quantity, 0)}
+              </span>
             </div>
 
             <div className="divider my-0" />
@@ -159,8 +194,8 @@ export default function CartPage() {
             </div>
 
             <p className="text-xs text-base-content/60">
-              Spedizione ed eventuali costi aggiuntivi saranno calcolati
-              durante il checkout.
+              Spedizione ed eventuali costi aggiuntivi saranno calcolati durante
+              il checkout.
             </p>
 
             <button
@@ -171,10 +206,7 @@ export default function CartPage() {
               Procedi all'acquisto
             </button>
 
-            <Link
-              to="/products"
-              className="btn btn-outline btn-primary w-full"
-            >
+            <Link to="/products" className="btn btn-outline btn-primary w-full">
               Continua gli acquisti
             </Link>
           </div>
