@@ -13,7 +13,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
   return (
     <>
       <div
-        className={`grid h-125 min-h-0 gap-1 ${
+        className={`grid h-125 min-h-0 gap-1  ${
           secondaryImages.length > 0 ? "grid-cols-2" : "grid-cols-1"
         }`}
       >
@@ -23,7 +23,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
             <button
               type="button"
               onClick={() => setModalImage(0)}
-              className="w-full h-full min-h-0"
+              className="w-full h-full min-h-0 cursor-pointer"
             >
               <img
                 src={getImageUrl(product.images[0].path)}
@@ -50,7 +50,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
                     key={image.id}
                     type="button"
                     onClick={() => setModalImage(index + 1)}
-                    className="min-h-0 w-full h-full"
+                    className="min-h-0 w-full h-full cursor-pointer"
                   >
                     <img
                       src={getImageUrl(image.path)}

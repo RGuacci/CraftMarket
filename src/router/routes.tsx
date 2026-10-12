@@ -16,6 +16,8 @@ import Register from '../views/auth/register';
 import Profile from "../views/auth/profile";
 import Seller from "../views/auth/seller";
 
+import CartPage from "../views/cart/cartPage";
+
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/products/:slug/edit",
         element: <EditProduct />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />
       }
     ],
   },

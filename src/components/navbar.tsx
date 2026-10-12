@@ -84,9 +84,6 @@ export default function Navbar() {
                     <li>
                       <Link to="/profile">Il mio profilo</Link>
                     </li>
-                    <li>
-                      <Link to="/products/create">Crea un articolo</Link>
-                    </li>
                     <span className="divider divider-neutral my-0"></span>
                     {user?.role === "seller" && (
                       <li>

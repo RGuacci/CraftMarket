@@ -8,6 +8,7 @@ import type { Product } from "../../services/productService";
 import DeleteProductModal from "../../components/products/deleteProductModal";
 import { getErrorMessage } from "../../utils/errorHandler";
 import { useFlashMessage } from "../../contexts/flashMessageContext";
+import { Link } from "react-router";
 
 export default function Seller() {
   const { data: user } = useUser();
@@ -25,13 +26,13 @@ export default function Seller() {
     if (!productToDelete) {
       return;
     }
-    
+
     setDeletingSlug(productToDelete.slug);
-  
+
     deleteProduct(productToDelete.slug, {
       onSuccess: () => {
         setProductToDelete(null);
-        showFlash("Articolo eliminato con successo.","success");
+        showFlash("Articolo eliminato con successo.", "success");
       },
 
       onError: (error) => {
@@ -62,9 +63,17 @@ export default function Seller() {
       <div className="mx-auto my-15 text-center">
         <h1 className="text-5xl mb-5">Dashboard Venditore</h1>
         {user && (
-          <p className="text-3xl">
-            Benvenuto <span className="font-bold">{user.name}</span>
-          </p>
+          <>
+            <p className="text-3xl">
+              Benvenuto <span className="font-bold">{user.name}</span>
+            </p>
+            <Link 
+            to={"/products/create"}
+            className="btn btn-primary mt-5"
+            >
+            Crea un articolo
+              </Link>
+          </>
         )}
       </div>
 
