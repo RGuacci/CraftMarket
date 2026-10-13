@@ -42,20 +42,21 @@ export default function Register() {
 
   return (
     <main>
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero  min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold mb-10">Registrati</h1>
+            <h1 className="text-5xl font-heading mb-10">Registrati</h1>
           </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <fieldset className="fieldset">
-                <form className="text-center" onSubmit={handleSubmit(onSubmit)}>
+                <form className="text-center text-lg" onSubmit={handleSubmit(onSubmit)}>
                   {/* Nome */}
+                  <label className="label mb-2">Nome</label>
                   <input
                     type="text"
                     className="input mb-3 p-5"
-                    placeholder="Nome"
+                    placeholder="Mario"
                     {...register("name", {
                       required: "Il nome è obbligatorio",
                       onChange: () => clearErrors("name"),
@@ -70,10 +71,11 @@ export default function Register() {
                   </div>
 
                   {/* Email */}
+                  <label className="label mb-2">Email</label>
                   <input
                     type="email"
                     className="input mb-3 p-5"
-                    placeholder="Email"
+                    placeholder="mario@rossi.com"
                     {...register("email", {
                       required: "L'email è obbligatoria",
                       pattern: {
@@ -92,10 +94,11 @@ export default function Register() {
                   </div>
 
                   {/* Password */}
+                  <label className="label mb-2">Password</label>
                   <input
                     type="password"
                     className="input mb-3 p-5"
-                    placeholder="Password"
+                    placeholder="La tua password"
                     {...register("password", {
                       required: "La password è obbligatoria",
                       minLength: {
@@ -115,10 +118,11 @@ export default function Register() {
                   </div>
 
                   {/* Conferma Password */}
+                  <label className="label mb-2">Conferma Password</label>
                   <input
                     type="password"
                     className="input mb-3 p-5"
-                    placeholder="Conferma Password"
+                    placeholder="La tua password"
                     {...register("password_confirmation", {
                       validate: (value) =>
                         value === watch("password") ||
@@ -135,14 +139,14 @@ export default function Register() {
 
                   <div>
                     <Link to="/login" className="link link-hover">
-                      Hai gia un account?{" "}
-                      <span className="font-bold">Accedi</span>
+                      Hai gia un account ? 
+                      <span className="font-bold p-1">Accedi</span>
                     </Link>
                   </div>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="btn btn-neutral mt-4"
+                    className="btn btn-primary mt-4"
                   >
                     {isPending ? "Registrazione..." : "Registrati"}
                   </button>

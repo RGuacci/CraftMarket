@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, Link, useLocation } from "react-router";
 import { useLogin } from "../../hooks/mutations/useLogin";
 import type { LoginData } from "../../services/authService";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,6 +9,7 @@ import { getErrorMessage } from "../../utils/errorHandler";
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { mutate, isPending } = useLogin();
   const queryClient = useQueryClient();
   const { showFlash } = useFlashMessage();
@@ -24,37 +25,39 @@ export default function Login() {
   const onSubmit = (data: LoginData) => {
     mutate(data, {
       onError: (error: unknown) => {
-             const handled = handleServerValidation(error, setError);
-     
-             if (!handled) {
-               showFlash(getErrorMessage(error), "error");
-             }
-           },
+        const handled = handleServerValidation(error, setError);
+
+        if (!handled) {
+          showFlash(getErrorMessage(error), "error");
+        }
+      },
       onSuccess: async () => {
         await queryClient.invalidateQueries({
           queryKey: ["user"],
         });
-        navigate("/");
+        const from = location.state?.from;
+        navigate(from ? `${from.pathname}${from.search}${from.hash}` : "/");
       },
     });
   };
 
   return (
     <main>
-      <div className="hero bg-base-200 min-h-screen">
+      <div className="hero min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold mb-10">Accedi</h1>
+            <h1 className="text-5xl font-heading mb-10">Accedi</h1>
           </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+          <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <fieldset className="fieldset">
-                <form className="text-center" onSubmit={handleSubmit(onSubmit)}>
+                <form className="text-center text-lg" onSubmit={handleSubmit(onSubmit)}>
                   {/* Email */}
+                  <label className="label mb-2">Email</label>
                   <input
                     type="email"
                     className="input mb-3 p-5"
-                    placeholder="Email"
+                    placeholder="mario@rossi.com"
                     {...register("email", {
                       required: "L'email è obbligatoria",
                       pattern: {
@@ -73,10 +76,11 @@ export default function Login() {
                   </div>
 
                   {/* Password */}
+                  <label className="label mb-2">Password</label>
                   <input
                     type="password"
                     className="input mb-3 p-5"
-                    placeholder="Password"
+                    placeholder="La tua Password"
                     {...register("password", {
                       required: "La password è obbligatoria",
                       onChange: () => clearErrors("password"),
@@ -90,13 +94,15 @@ export default function Login() {
                     )}
                   </div>
                   <div className="flex flex-col gap-3">
-                    <a className="link link-hover">Password dimenticata?</a>
-                    <Link className="link link-hover" to={"/register"}>Non hai un account? <span className="font-bold">Registrati</span></Link>
+                    <Link className="link link-hover" to={"/register"}>
+                      Non hai un account?{" "}
+                      <span className="font-bold p-1">Registrati</span>
+                    </Link>
                   </div>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="btn btn-neutral mt-4"
+                    className="btn btn-primary mt-4"
                   >
                     {isPending ? "Accesso..." : "Accedi"}
                   </button>

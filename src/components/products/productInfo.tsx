@@ -2,6 +2,8 @@ import type { Product } from "../../services/productService";
 import { BsCartCheck } from "react-icons/bs";
 import { FaShoppingBag } from "react-icons/fa";
 import { useAddToCart } from "../../hooks/mutations/useAddToCart";
+import { useNavigate, useLocation } from "react-router";
+import { useAuth } from "../../contexts/authContext";
 
 interface ProductInfoProps {
   product: Product;
@@ -9,13 +11,16 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ product }: ProductInfoProps) {
   const addToCart = useAddToCart();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
   return (
     <>
       <div className="flex h-full flex-col gap-6 p-6 lg:p-8 shadow-lg bg-base-200">
         {/* Titolo e venditore */}
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
+          <h1 className="text-3xl font-heading tracking-tight">{product.name}</h1>
 
           <p className="text-sm text-base-content/60">
             Venduto da {product.user.name}
@@ -65,12 +70,19 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           <button
             className="btn btn-outline btn-primary min-w-0 gap-1 px-1 sm:gap-2 sm:px-3"
             disabled={product.stock === 0 || addToCart.isPending}
-            onClick={() =>
+            onClick={() => {
+              if (!isAuthenticated) {
+                navigate("/login",{
+                  state: {from: location},
+                });
+                return;
+              }
+
               addToCart.mutate({
                 product_id: product.id,
                 quantity: 1,
-              })
-            }
+              });
+            }}
           >
             <BsCartCheck className="text-base shrink-0 sm:text-xl" />
 

@@ -15,6 +15,7 @@ import Login from '../views/auth/login';
 import Register from '../views/auth/register';
 import Profile from "../views/auth/profile";
 import Seller from "../views/auth/seller";
+import BecomeSeller from "../views/auth/becomeSeller";
 
 import CartPage from "../views/cart/cartPage";
 
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: "/seller",
         element: <Seller />
+      },
+      {
+        path: "/become-seller",
+        element: <BecomeSeller />
       }
     ],
   },

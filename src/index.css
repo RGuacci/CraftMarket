@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Commissioner:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 @plugin "daisyui" {
   themes: all;
 }
 
+/* Font principale */
+@theme {
+--font-sans: "Commissioner", sans-serif;
+--font-heading: "Carter One", cursive;
+}
 

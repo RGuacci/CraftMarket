@@ -24,21 +24,11 @@ export default function Navbar() {
 
   return (
     <header>
-      {/* Barra superiore */}
-      {/* <div className="bg-base-200">
-        <div className="container mx-auto flex justify-around py-2">
-          <span>Aiuto e contatti</span>
-          <span>Spedizione gratuita oltre 49 €</span>
-          <span>Reso entro 30 giorni</span>
-          <span>Buoni regalo</span>
-        </div>
-      </div> */}
-
       {/* Navbar principale */}
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
-          <div className="text-xl font-bold">
+          <div className="text-xl md:text-3xl  font-heading">
             <Link to={"/"}>Satisfy</Link>
           </div>
 
@@ -68,16 +58,18 @@ export default function Navbar() {
           {/* Azioni utente */}
           <div className="flex items-center gap-4">
             {/* Carrello */}
-            <Link
-              to="/cart"
-              className="indicator btn btn-ghost btn-circle"
-              aria-label={`Carrello, ${cartCount} articoli`}
-            >
-              <span className="indicator-item badge badge-primary badge-sm">
-                {cartCount}
-              </span>
-              <BsCart4 className="text-2xl" />
-            </Link>
+            {isAuthenticated && (
+              <Link
+                to="/cart"
+                className="indicator btn btn-ghost btn-circle"
+                aria-label={`Carrello, ${cartCount} articoli`}
+              >
+                <span className="indicator-item badge badge-primary badge-sm">
+                  {cartCount}
+                </span>
+                <BsCart4 className="text-2xl" />
+              </Link>
+            )}
 
             {/* Profilo */}
             <div className="dropdown dropdown-end">

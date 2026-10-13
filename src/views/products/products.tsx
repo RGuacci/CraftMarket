@@ -28,8 +28,8 @@ export default function Products() {
     <section className="w-full flex justify-center px-4">
       <div className="w-full max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-15">
-          {products.data.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {products.data.map((product, index) => (
+            <ProductCard key={product.id} product={product}  index={index} />
           ))}
         </div>
 
@@ -47,7 +47,7 @@ export default function Products() {
               <button
                 key={pageNumber}
                 className={`join-item btn  ${
-                  pageNumber === page ? "btn-active" : ""
+                  pageNumber === page ? "btn" : ""
                 }`}
                 onClick={() => setPage(pageNumber)}
               >
