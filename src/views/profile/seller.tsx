@@ -1,8 +1,8 @@
 import { useUser } from "../../hooks/queries/useUser";
-import { useMyProducts } from "../../hooks/queries/useMyProducts";
+import { useMyProducts } from "../../hooks/queries/product/useMyProducts";
 import ProductsTable from "../../components/products/productsTable";
 import ProductsCardsTable from "../../components/products/productsCardsTable";
-import { useDeleteProduct } from "../../hooks/mutations/useDeleteProduct";
+import { useDeleteProduct } from "../../hooks/mutations/product/useDeleteProduct";
 import { useState } from "react";
 import type { Product } from "../../services/productService";
 import DeleteProductModal from "../../components/products/deleteProductModal";

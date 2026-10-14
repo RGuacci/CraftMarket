@@ -1,4 +1,4 @@
-import { useProducts } from "../../hooks/queries/useProducts";
+import { useProducts } from "../../hooks/queries/product/useProducts";
 import ProductCard from "../../components/products/productCard";
 import { useState } from "react";
 

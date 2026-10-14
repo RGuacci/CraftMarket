@@ -3,7 +3,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router";
 
 import { useAuth } from "../../../contexts/authContext";
-import { useAddToCart } from "../../../hooks/mutations/useAddToCart";
+import { useAddToCart } from "../../../hooks/mutations/cart/useAddToCart";
 import type { Product } from "../../../services/productService";
 
 interface ProductActionsProps {

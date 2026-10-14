@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { BsCartCheck } from "react-icons/bs";
-import { useCart } from "../../hooks/queries/useCart";
-import { useUpdateCartItem } from "../../hooks/mutations/useUpdateCartItem";
+import { useCart } from "../../hooks/queries/cart/useCart";
+import { useUpdateCartItem } from "../../hooks/mutations/cart/useUpdateCartItem";
 import { getImageUrl } from "../../utils/images";
 import CheckoutButton from "../../components/cart/checkoutButton" ;
 

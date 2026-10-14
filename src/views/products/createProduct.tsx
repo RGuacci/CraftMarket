@@ -4,7 +4,7 @@ import type {
   ProductFormData,
 } from "../../services/productService";
 import { useForm } from "react-hook-form";
-import { useCreateProduct } from "../../hooks/mutations/useCreateProduct";
+import { useCreateProduct } from "../../hooks/mutations/product/useCreateProduct";
 import { useCategories } from "../../hooks/queries/useCategories";
 import { useNavigate } from "react-router";
 import { getErrorMessage } from "../../utils/errorHandler";

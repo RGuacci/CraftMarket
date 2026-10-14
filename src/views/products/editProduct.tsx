@@ -1,5 +1,5 @@
-import { useUpdateProduct } from "../../hooks/mutations/useUpdateProduct";
-import { useProduct } from "../../hooks/queries/useProduct";
+import { useUpdateProduct } from "../../hooks/mutations/product/useUpdateProduct";
+import { useProduct } from "../../hooks/queries/product/useProduct";
 import { useCategories } from "../../hooks/queries/useCategories";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

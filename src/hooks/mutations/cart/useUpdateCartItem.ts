@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateCartItem } from "../../services/cartServices";
+import { updateCartItem } from "../../../services/cartServices";
 
 interface UpdateCartItemVariables {
   productId: number;

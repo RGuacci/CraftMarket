@@ -1,5 +1,5 @@
-import { updateProduct } from '../../services/productService';
-import type {  UpdatedProductData } from '../../services/productService';
+import { updateProduct } from '../../../services/productService';
+import type {  UpdatedProductData } from '../../../services/productService';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateProduct = () => {

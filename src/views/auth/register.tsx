@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import { useRegister } from "../../hooks/mutations/useRegister";
+import { useRegister } from "../../hooks/mutations/auth/useRegister";
 import type { RegisterData } from "../../services/authService";
 import { useQueryClient } from "@tanstack/react-query";
 import { handleServerValidation } from "../../utils/serverValidation";

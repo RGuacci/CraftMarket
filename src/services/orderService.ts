@@ -8,14 +8,35 @@ export interface OrderItem {
   product_id: number;
   quantity: number;
   price: number;
+  product?: {
+    id: number;
+    name: string;
+    images?: {
+      id: number;
+      image_path: string;
+    }[];
+  } | null;
 }
+
+export type OrderStatus = "pending" | "paid" | "failed";
 
 export interface Order {
   id: number;
   user_id: number;
-  status: "pending" | "paid" | "failed";
-  total: number;
+  status: OrderStatus;
+  total: string | number;
+  shipping_name: string;
+  shipping_address: string;
+  shipping_city: string;
+  shipping_postal_code: string;
+  shipping_country: string;
   order_items: OrderItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+interface OrdersResponse {
+  orders: Order[];
 }
 
 interface OrderResponse {
@@ -23,14 +44,19 @@ interface OrderResponse {
   order: Order;
 }
 
+// checkout
 export async function checkout(
   shippingAddress: ShippingAddress,
 ): Promise<Order> {
-  const response = await api.post<OrderResponse>("/api/checkout", shippingAddress);
+  const response = await api.post<OrderResponse>(
+    "/api/checkout",
+    shippingAddress,
+  );
 
   return response.data.order;
 }
 
+// pagamento
 export async function payOrder(
   orderId: number,
   method: PaymentMethod,
@@ -41,3 +67,17 @@ export async function payOrder(
 
   return response.data.order;
 }
+
+// caricamento ordini
+export const getOrders = async (): Promise<Order[]> => {
+  const response = await api.get<OrdersResponse>("api/orders");
+
+  return response.data.orders;
+};
+
+// caricamento ordine
+export const getOrder = async (orderId: number): Promise<Order> => {
+  const response = await api.get<OrderResponse>(`api/orders/${orderId}`);
+
+  return response.data.order;
+};

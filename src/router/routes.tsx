@@ -20,7 +20,9 @@ import CartPage from "../views/cart/cartPage";
 
 import Profile from "../views/profile/profile";
 import Seller from "../views/profile/seller";
-import Orders from "../views/profile/orders";
+
+import Orders from "../views/orders/orders";
+import Order from "../views/orders/order";
 
 
 export const router = createBrowserRouter([
@@ -79,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "/profile/orders",
         element: <Orders />
+      },
+      {
+        path: "/profile/orders/:orderId",
+        element: <Order />
       }
     ],
   },
