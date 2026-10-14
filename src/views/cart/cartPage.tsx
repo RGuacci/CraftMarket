@@ -1,19 +1,62 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { BsCartCheck } from "react-icons/bs";
+
 import { useCart } from "../../hooks/queries/useCart";
-import { getImageUrl } from "../../utils/images";
 import { useUpdateCartItem } from "../../hooks/mutations/useUpdateCartItem";
+import { getImageUrl } from "../../utils/images";
+import CheckoutButton from "../../components/cart/checkoutButton" ;
+
+interface OrderConfirmation {
+  orderId: number;
+  total: number;
+}
 
 export default function CartPage() {
   const { data: cart, isPending, isError } = useCart();
   const updateCart = useUpdateCartItem();
 
+  const [confirmation, setConfirmation] = useState<OrderConfirmation | null>(
+    null,
+  );
+
   const handleUpdate = (productId: number, quantity: number) => {
-    updateCart.mutate({
-      productId,
-      quantity,
-    });
+    updateCart.mutate({ productId, quantity });
   };
+
+  if (confirmation) {
+    return (
+      <main className="mx-auto flex min-h-96 max-w-xl flex-col items-center justify-center gap-5 px-4 py-12 text-center">
+        <BsCartCheck className="text-6xl text-success" />
+
+        <h1 className="text-3xl font-bold">Acquisto completato!</h1>
+
+        <p className="text-base-content/70">
+          Il tuo ordine è stato registrato correttamente.
+        </p>
+
+        <div className="card w-full border border-base-300 bg-base-200 shadow-sm">
+          <div className="card-body items-center gap-3">
+            <p className="text-base-content/60">Numero ordine</p>
+
+            <p className="text-xl font-bold">#{confirmation.orderId}</p>
+
+            <div className="divider my-0" />
+
+            <p className="text-base-content/60">Totale pagato</p>
+
+            <p className="text-3xl font-bold text-primary">
+              € {confirmation.total.toFixed(2)}
+            </p>
+          </div>
+        </div>
+
+        <Link to="/products" className="btn btn-primary mt-2">
+          Continua gli acquisti
+        </Link>
+      </main>
+    );
+  }
 
   if (isPending) {
     return (
@@ -51,6 +94,11 @@ export default function CartPage() {
 
   const total = cart.items.reduce(
     (sum, item) => sum + Number(item.product.price) * item.quantity,
+    0,
+  );
+
+  const totalQuantity = cart.items.reduce(
+    (sum, item) => sum + item.quantity,
     0,
   );
 
@@ -111,51 +159,43 @@ export default function CartPage() {
                       € {Number(product.price).toFixed(2)}
                     </p>
 
-                    <div className="mt-1 flex items-center gap-3">
-                      <div className="mt-1 flex items-center gap-3">
-                        <span className="text-sm text-base-content/60">
-                          Quantità
+                    <div className="mt-1 flex flex-wrap items-center gap-3">
+                      <span className="text-sm text-base-content/60">
+                        Quantità
+                      </span>
+
+                      <div className="join">
+                        <button
+                          type="button"
+                          className="btn btn-sm join-item btn-outline btn-primary"
+                          disabled={updateCart.isPending}
+                          onClick={() =>
+                            handleUpdate(product.id, item.quantity - 1)
+                          }
+                          aria-label="Diminuisci quantità"
+                        >
+                          −
+                        </button>
+
+                        <span className="btn btn-sm join-item pointer-events-none">
+                          {item.quantity}
                         </span>
 
-                        <div className="join">
-                          <button
-                            className="btn btn-sm join-item btn-outline btn-primary"
-                            disabled={updateCart.isPending}
-                            onClick={() =>
-                              handleUpdate(item.product.id, item.quantity - 1)
-                            }
-                            aria-label="Diminuisci quantità"
-                          >
-                            −
-                          </button>
-
-                          <span className="btn btn-sm join-item pointer-events-none">
-                            {item.quantity}
-                          </span>
-
-                          <button
-                            className="btn btn-sm join-item btn-outline btn-primary"
-                            disabled={
-                              updateCart.isPending ||
-                              item.quantity >= item.product.stock
-                            }
-                            onClick={() =>
-                              handleUpdate(item.product.id, item.quantity + 1)
-                            }
-                            aria-label="Aumenta quantità"
-                          >
-                            +
-                          </button>
-                        </div>
+                        <button
+                          type="button"
+                          className="btn btn-sm join-item btn-outline btn-primary"
+                          disabled={
+                            updateCart.isPending ||
+                            item.quantity >= product.stock
+                          }
+                          onClick={() =>
+                            handleUpdate(product.id, item.quantity + 1)
+                          }
+                          aria-label="Aumenta quantità"
+                        >
+                          +
+                        </button>
                       </div>
-
-                      <button
-                        type="button"
-                        className="btn btn-ghost btn-sm btn-square text-error"
-                        aria-label={`Rimuovi ${product.name}`}
-                        disabled
-                        title="Rimozione non ancora disponibile"
-                      ></button>
                     </div>
                   </div>
 
@@ -172,22 +212,21 @@ export default function CartPage() {
           })}
         </section>
 
-        {/* Riepilogo */}
+        {/* Riepilogo ordine */}
         <aside className="card border border-base-300 bg-base-200 shadow-sm lg:sticky lg:top-6">
           <div className="card-body gap-4">
             <h2 className="text-xl font-bold">Riepilogo ordine</h2>
 
             <div className="flex justify-between gap-4 text-base-content/70">
               <span>Prodotti</span>
-              <span>
-                {cart.items.reduce((sum, item) => sum + item.quantity, 0)}
-              </span>
+              <span>{totalQuantity}</span>
             </div>
 
             <div className="divider my-0" />
 
             <div className="flex items-center justify-between gap-4">
               <span className="font-semibold">Totale prodotti</span>
+
               <span className="text-2xl font-bold text-primary">
                 € {total.toFixed(2)}
               </span>
@@ -198,13 +237,15 @@ export default function CartPage() {
               il checkout.
             </p>
 
-            <button
-              type="button"
-              className="btn btn-primary mt-2 w-full"
-              disabled
-            >
-              Procedi all'acquisto
-            </button>
+            <CheckoutButton
+              total={total}
+              onPaymentSuccess={(orderId, paidTotal) =>
+                setConfirmation({
+                  orderId,
+                  total: paidTotal,
+                })
+              }
+            />
 
             <Link to="/products" className="btn btn-outline btn-primary w-full">
               Continua gli acquisti

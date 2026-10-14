@@ -92,6 +92,9 @@ export default function Navbar() {
                     <li>
                       <Link to="/profile">Il mio profilo</Link>
                     </li>
+                     <li>
+                      <Link to="/profile/orders">I tuoi ordini</Link>
+                    </li>
                     <span className="divider divider-neutral my-0"></span>
                     {user?.role === "seller" && (
                       <li>

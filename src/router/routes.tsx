@@ -13,11 +13,15 @@ import EditProduct from '../views/products/editProduct';
 
 import Login from '../views/auth/login';
 import Register from '../views/auth/register';
-import Profile from "../views/auth/profile";
-import Seller from "../views/auth/seller";
-import BecomeSeller from "../views/auth/becomeSeller";
+
+import BecomeSeller from "../views/emails/becomeSeller";
 
 import CartPage from "../views/cart/cartPage";
+
+import Profile from "../views/profile/profile";
+import Seller from "../views/profile/seller";
+import Orders from "../views/profile/orders";
+
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +75,10 @@ export const router = createBrowserRouter([
       {
         path: "/become-seller",
         element: <BecomeSeller />
+      },
+      {
+        path: "/profile/orders",
+        element: <Orders />
       }
     ],
   },
