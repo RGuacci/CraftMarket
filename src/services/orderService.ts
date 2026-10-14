@@ -1,4 +1,5 @@
 import { api } from "../api/axios";
+import type { ShippingAddress } from "../components/cart/shippingModal";
 
 export type PaymentMethod = "card" | "paypal";
 
@@ -22,8 +23,10 @@ interface OrderResponse {
   order: Order;
 }
 
-export async function checkout(): Promise<Order> {
-  const response = await api.post<OrderResponse>("/api/checkout");
+export async function checkout(
+  shippingAddress: ShippingAddress,
+): Promise<Order> {
+  const response = await api.post<OrderResponse>("/api/checkout", shippingAddress);
 
   return response.data.order;
 }
