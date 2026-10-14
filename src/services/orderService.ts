@@ -13,7 +13,7 @@ export interface OrderItem {
     name: string;
     images?: {
       id: number;
-      image_path: string;
+      path: string;
     }[];
   } | null;
 }
