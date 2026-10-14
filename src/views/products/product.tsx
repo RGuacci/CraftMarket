@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { useProduct } from "../../hooks/queries/useProduct";
 import type { Product } from "../../services/productService";
-import ProductGallery from "../../components/products/productGallery";
-import ProductInfo from "../../components/products/productInfo";
+import ProductGallery from "../../components/products/details/productGallery";
+import ProductInfo from "../../components/products/details/productInfo";
 import { motion } from "motion/react";
 
 export default function Product() {

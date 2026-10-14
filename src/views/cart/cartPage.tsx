@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { BsCartCheck } from "react-icons/bs";
-
 import { useCart } from "../../hooks/queries/useCart";
 import { useUpdateCartItem } from "../../hooks/mutations/useUpdateCartItem";
 import { getImageUrl } from "../../utils/images";

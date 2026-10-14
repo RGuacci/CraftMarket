@@ -1,6 +1,6 @@
-import type { Product } from "../../services/productService";
+import type { Product } from "../../../services/productService";
 import { useState } from "react";
-import { getImageUrl } from "../../utils/images";
+import { getImageUrl } from "../../../utils/images";
 
 interface ProductGalleryProps {
   product: Product;
