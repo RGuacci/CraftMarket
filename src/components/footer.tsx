@@ -5,36 +5,30 @@ import { AiFillTikTok } from "react-icons/ai";
 
 export default function Footer() {
   return (
-    <footer className="footer border-t base-300 content p-10 flex flex-col items-center">
-      <aside className="flex gap-5 text-center">
-        <div className="p-5">
-          <h2 className="text-xl mb-2">Satisfy</h2>
-          <p className="text-base-content/70 mb-1">Chi siamo</p>
-          <p className="text-base-content/70">Lavora con noi</p>
-        </div>
+    <footer className="footer sm:footer-horizontal border-t vorder-base-300 text-base-content p-10">
+      <nav>
+        <h6 className="footer-title text-primary text-lg">Servizi</h6>
+        <a className="link link-hover">Vendi</a>
+        <a className="link link-hover">Sfoglia il nostro catalogo</a>
+        <a className="link link-hover">Ordina quando vuoi</a>
+        <a className="link link-hover">Rimborso garantito</a>
+      </nav>
+      <nav>
+        <h6 className="footer-title text-primary text-lg">Satisfy</h6>
+        <a className="link link-hover">Chi siamo</a>
+        <a className="link link-hover">Contattaci</a>
+        <a className="link link-hover">Lavora con noi</a>
+      </nav>
+      <nav>
+        <h6 className="footer-title text-primary text-lg">Social</h6>
+        <div className="grid grid-flow-col gap-4">
+          <FaInstagramSquare className="text-2xl cursor-pointer"/>
 
-        <div className="p-5">
-          <h2 className="text-xl mb-2">Scopri</h2>
-          <p className="text-base-content/70 mb-1">Come funziona</p>
-          <p className="text-base-content/70 mb-1">Verfica dell 'articolo</p>
-          <p className="text-base-content/70">Per l'ambiente</p>
-        </div>
+          <FaXTwitter className="text-2xl cursor-pointer"/>
 
-        <div className="p-5">
-          <h2 className="text-xl mb-2">Assistenza</h2>
-          <p className="text-base-content/70 mb-1">Domande frequenti</p>
-          <p className="text-base-content/70">Contattaci</p>
-        </div>
-      </aside>
+          <FaFacebook className="text-2xl cursor-pointer"/>
 
-      <nav className="border-t border-base-300 w-screen flex flex-col items-center">
-        <h5 className="footer-title font-heading text-xl mt-5">Social</h5>
-
-        <div className="flex gap-4 text-lg md:text-2xl text-neutral">
-          <FaFacebook />
-          <FaXTwitter />
-          <FaInstagramSquare />
-          <AiFillTikTok />
+          <AiFillTikTok className="text-2xl cursor-pointer"/>
         </div>
       </nav>
     </footer>

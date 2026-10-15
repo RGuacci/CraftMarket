@@ -53,14 +53,10 @@ const cardVariants = {
 
 export default function AboutSatisfy() {
   return (
-    <section className=" px-4 py-16 sm:px-6 sm:py-20 lg:px-8 my-10">
-      <div className="mx-auto max-w-6xl">
+    <section className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8 my-10">
+      <div className="mx-auto max-w-6xl  border border-base-300 p-10">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-            Benvenuto su Satisfy
-          </p>
-
-          <h2 className="text-3xl font-bold sm:text-4xl">
+          <h2 className="text-3xl font-bold sm:text-4xl text-primary font-heading">
             Un marketplace, tante possibilità.
           </h2>
 
@@ -87,7 +83,6 @@ export default function AboutSatisfy() {
             >
               <div className="card-body p-6 sm:p-8">
                 <div className="flex items-center">
-
                   <span
                     aria-hidden="true"
                     className="flex size-12 items-center justify-center rounded-xl bg-primary/10 text-2xl text-primary"

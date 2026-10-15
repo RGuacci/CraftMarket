@@ -28,7 +28,7 @@ export default function Navbar() {
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
-          <div className="text-xl md:text-3xl  font-heading">
+          <div className="text-xl md:text-3xl  font-heading text-primary">
             <Link to={"/"}>Satisfy</Link>
           </div>
 
@@ -72,27 +72,19 @@ export default function Navbar() {
             )}
 
             {/* Profilo */}
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost p-0">
-                <CgProfile className="text-2xl p-0" />
-              </div>
 
-              <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
-                {!isAuthenticated ? (
-                  <>
-                    <li>
-                      <Link to="/login">Accedi</Link>
-                    </li>
-                    <li>
-                      <Link to="/register">Registrati</Link>
-                    </li>
-                  </>
-                ) : (
-                  <>
+            {isAuthenticated ? (
+              <>
+                <div className="dropdown dropdown-end">
+                  <div tabIndex={0} role="button" className="btn btn-ghost p-0">
+                    <CgProfile className="text-2xl p-0" />
+                  </div>
+
+                  <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
                     <li>
                       <Link to="/profile">Il mio profilo</Link>
                     </li>
-                     <li>
+                    <li>
                       <Link to="/profile/orders">I tuoi ordini</Link>
                     </li>
                     <span className="divider divider-neutral my-0"></span>
@@ -106,10 +98,16 @@ export default function Navbar() {
                         Logout
                       </button>
                     </li>
-                  </>
-                )}
-              </ul>
-            </div>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                <Link className="btn btn-primary" to={"/register"}>
+                  <span className="mx-1">Iscriviti</span> |  <span className="mx-1">Accedi</span>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>

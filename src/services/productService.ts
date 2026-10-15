@@ -32,7 +32,7 @@ export interface PaginatedProducts {
     from: number | null;
     to: number | null;
     path: string;
-  }
+  };
 }
 
 export interface CreateProductData {
@@ -48,7 +48,6 @@ export interface UpdatedProductData extends CreateProductData {
   remove_images: number[];
 }
 
-
 export type ProductFormData = Omit<CreateProductData, "categories" | "images">;
 
 export interface CategorySelectorProps {
@@ -57,14 +56,11 @@ export interface CategorySelectorProps {
   onChange: (ids: number[]) => void;
 }
 
-
 export interface Category {
   id: number;
   name: string;
   slug: string;
 }
-
-
 
 export interface ProductImages {
   id: number;
@@ -73,7 +69,6 @@ export interface ProductImages {
   created_at: string;
   updated_at: string;
 }
-
 
 export interface ImageUploaderProps {
   images: File[];
@@ -91,11 +86,9 @@ export interface CardProps {
 }
 
 // Index
-export const getProducts = async (page: number): Promise<PaginatedProducts> => {
+export const getProducts = async (page: number ,perPage = 12): Promise<PaginatedProducts> => {
   const response = await api.get<PaginatedProducts>("/api/products", {
-    params: {
-     params: { page },
-    },
+    params: { page, perPage: perPage, },
   });
   return response.data;
 };

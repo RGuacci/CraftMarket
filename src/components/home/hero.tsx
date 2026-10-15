@@ -5,7 +5,7 @@ export default function Hero() {
   const heroImage = "/images/hero.png";
 
   return (
-    <section className="px-4 pt-6 sm:px-6 lg:px-8">
+    <section className="px-4 py-6 sm:px-6 lg:px-8 ">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl lg:min-h-115 lg:flex lg:items-center">
         {/* Immagine per mobile e tablet */}
         <div
@@ -45,7 +45,7 @@ export default function Hero() {
             transition={{ delay: 0.25, duration: 0.4 }}
             className="text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl"
           >
-            Trova qualcosa che ti soddisfa.
+            Cerca quello che fa per te !
           </motion.h1>
 
           <motion.p
@@ -54,7 +54,7 @@ export default function Hero() {
             transition={{ delay: 0.35, duration: 0.4 }}
             className="mt-3 text-sm leading-relaxed text-base-content/70 sm:mt-4 sm:text-base"
           >
-            Scopri prodotti unici, trova ciò che cerchi o inizia a vendere alla
+            Scopri prodotti unici o inizia a vendere alla
             nostra community.
           </motion.p>
 

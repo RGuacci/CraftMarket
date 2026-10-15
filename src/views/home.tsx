@@ -1,6 +1,6 @@
-
 import Hero from "../components/home/hero";
 import AboutSatisfy from "../components/home/aboutSatisfy";
+import LatestProducts from "../components/home/latestProducts";
 
 
 export default function Home() {
@@ -8,6 +8,7 @@ export default function Home() {
     <section>
       <Hero />
       <AboutSatisfy />
+      <LatestProducts />
     </section>
   );
 }
