@@ -10,7 +10,7 @@ export default function LatestProducts() {
   if (isError) return <p>Errore nel caricamento dei prodotti.</p>;
 
   return (
-    <section className="py-12 sm:py-16">
+    <section id="ultimi-arrivi" className="py-12 sm:py-16">
       <div className="container mx-auto px-4 border border-base-300 p-10 md:p-15">
         {/* Intestazione */}
         <div className="flex items-end justify-center gap-4 mb-8">

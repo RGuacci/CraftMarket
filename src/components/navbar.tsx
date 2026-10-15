@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/authContext";
 import { CgProfile } from "react-icons/cg";
 import { BsCart4 } from "react-icons/bs";
 import { useCart } from "../hooks/queries/cart/useCart";
+import SearchBar from "./navbar/searchBar";
 
 export default function Navbar() {
   const { mutate, isPending } = useLogout();
@@ -28,31 +29,13 @@ export default function Navbar() {
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
-          <div className="text-xl md:text-3xl  font-heading text-primary">
+          <div className="text-3xl  font-heading text-primary">
             <Link to={"/"}>Satisfy</Link>
           </div>
 
           {/* Ricerca */}
-          <div className="w-30 md:w-64">
-            <label className="input w-full">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input type="search" required placeholder="Cerca" />
-            </label>
+          <div className="hidden md:block w-64 lg:w-80">
+            <SearchBar />
           </div>
 
           {/* Azioni utente */}
@@ -104,7 +87,8 @@ export default function Navbar() {
             ) : (
               <>
                 <Link className="btn btn-primary" to={"/register"}>
-                  <span className="mx-1">Iscriviti</span> |  <span className="mx-1">Accedi</span>
+                  <span className="mx-1">Iscriviti</span> |{" "}
+                  <span className="mx-1">Accedi</span>
                 </Link>
               </>
             )}
@@ -116,9 +100,7 @@ export default function Navbar() {
       <div className="border-t border-base-300">
         <div className="container mx-auto flex justify-center gap-6 py-3">
           <Link to={"/products"}>Tutti i prodotti</Link>
-          <span>Categorie</span>
-          <span>Novità</span>
-          <span>Offerte</span>
+          <Link to="/#ultimi-arrivi">Novità</Link>
         </div>
       </div>
     </header>

@@ -85,10 +85,26 @@ export interface CardProps {
   product: Product;
 }
 
+type ProductFilters = {
+  search?: string;
+  category?: number;
+  sort?: "latest" | "price_asc" | "price_desc";
+};
+
 // Index
-export const getProducts = async (page: number ,perPage = 12): Promise<PaginatedProducts> => {
+export const getProducts = async (
+  page: number,
+  perPage = 12,
+  filters: ProductFilters = {},
+): Promise<PaginatedProducts> => {
   const response = await api.get<PaginatedProducts>("/api/products", {
-    params: { page, perPage: perPage, },
+    params: {
+      page,
+      per_page: perPage,
+      ...(filters?.search && { search: filters.search }),
+      ...(filters?.category && { category: filters.category }),
+      ...(filters?.sort && { sort: filters.sort }),
+    },
   });
   return response.data;
 };
@@ -163,7 +179,7 @@ export const getCategories = async (): Promise<Category[]> => {
   return response.data;
 };
 
-// Prodotti di um utente
+// Prodotti di un utente
 export const getMyProducts = async (): Promise<Product[]> => {
   const response = await api.get("/api/seller/products");
 
