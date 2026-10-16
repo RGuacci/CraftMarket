@@ -9,6 +9,7 @@ import { CgLogOut } from "react-icons/cg";
 import { GiSuitcase } from "react-icons/gi";
 import { FaShop } from "react-icons/fa6";
 import { useCart } from "../hooks/queries/cartQueries/useCart";
+import ProfileIcon from "../components/navbar/profileIcon";
 
 import SearchBar from "./navbar/searchBar";
 
@@ -71,19 +72,7 @@ export default function Navbar() {
                     aria-label="Apri menu profilo"
                     className="btn btn-ghost btn-circle p-0"
                   >
-                    {/* Icona profilo con le iniziali */}
-                    <div className="avatar placeholder">
-                      <div className="w-11 h-11 rounded-full bg-primary/15 text-primary flex items-center justify-center transition-colors hover:bg-primary/25">
-                        <span className="text-sm font-semibold">
-                          {user?.name
-                            ?.trim()
-                            .split(/\s+/)
-                            .slice(0, 2)
-                            .map((part) => part.charAt(0).toUpperCase())
-                            .join("")}
-                        </span>
-                      </div>
-                    </div>
+                    <ProfileIcon name={user?.name} size="sm" />
                   </div>
 
                   <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-56 p-2 shadow">

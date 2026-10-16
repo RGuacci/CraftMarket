@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { useAuth } from "../../contexts/authContext";
 import { BsBoxSeam } from "react-icons/bs";
+import ProfileIcon from "../../components/navbar/profileIcon";
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -14,18 +15,7 @@ export default function ProfilePage() {
       <div className="card bg-base-200 shadow-sm border border-base-300 max-w-2xl mx-auto">
         <div className="card-body gap-6">
           <div className="flex items-center gap-4">
-            <div className="avatar placeholder">
-              <div className="w-14 rounded-full bg-primary/15 text-primary flex items-center justify-center">
-                <span className="text-lg font-semibold">
-                  {user?.name
-                    ?.trim()
-                    .split(/\s+/)
-                    .slice(0, 2)
-                    .map((part) => part.charAt(0).toUpperCase())
-                    .join("")}
-                </span>
-              </div>
-            </div>
+            <ProfileIcon name={user?.name} size="lg" />
 
             <div>
               <h2 className="text-xl font-semibold">{user?.name}</h2>
