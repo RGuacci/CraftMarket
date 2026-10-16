@@ -1,4 +1,4 @@
-import { useLatestProducts } from "../../hooks/queries/product/useLatestProducts";
+import { useLatestProducts } from "../../hooks/queries/productsQueries/useLatestProducts";
 import ProductCard from "../products/productCard";
 import { Link } from "react-router";
 

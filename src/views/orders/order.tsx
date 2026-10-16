@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router";
-import { useOrder } from "../../hooks/queries/orders/useOrder";
+import { useOrder } from "../../hooks/queries/orderQueries/useOrder";
 
 export default function Order() {
   const { orderId } = useParams();

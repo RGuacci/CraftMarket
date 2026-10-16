@@ -1,18 +1,18 @@
 import { createBrowserRouter } from "react-router";
 
-import MainLayout from '../layouts/mainLayout';
-import AuthLayout from '../layouts/authLayout';
+import MainLayout from "../layouts/mainLayout";
+import AuthLayout from "../layouts/authLayout";
 
-import Home from '../views/home';
-import NotFound from '../views/notFound';
+import Home from "../views/home";
+import NotFound from "../views/notFound";
 
-import Products from '../views/products/products';
-import Product from '../views/products/product';
-import CreateProduct from '../views/products/createProduct';
-import EditProduct from '../views/products/editProduct';
+import Products from "../views/products/products";
+import Product from "../views/products/product";
+import CreateProduct from "../views/products/createProduct";
+import EditProduct from "../views/products/editProduct";
 
-import Login from '../views/auth/login';
-import Register from '../views/auth/register';
+import Login from "../views/auth/login";
+import Register from "../views/auth/register";
 
 import BecomeSeller from "../views/emails/becomeSeller";
 
@@ -20,10 +20,10 @@ import CartPage from "../views/cart/cartPage";
 
 import Profile from "../views/profile/profile";
 import Seller from "../views/profile/seller";
+import Admin from "../views/profile/admin";
 
 import Orders from "../views/orders/orders";
 import Order from "../views/orders/order";
-
 
 export const router = createBrowserRouter([
   {
@@ -51,8 +51,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cart",
-        element: <CartPage />
-      }
+        element: <CartPage />,
+      },
     ],
   },
   {
@@ -68,24 +68,28 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />
+        element: <Profile />,
       },
       {
         path: "/seller",
-        element: <Seller />
+        element: <Seller />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
       },
       {
         path: "/become-seller",
-        element: <BecomeSeller />
+        element: <BecomeSeller />,
       },
       {
         path: "/profile/orders",
-        element: <Orders />
+        element: <Orders />,
       },
       {
         path: "/profile/orders/:orderId",
-        element: <Order />
-      }
+        element: <Order />,
+      },
     ],
   },
   {

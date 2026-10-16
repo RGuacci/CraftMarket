@@ -1,4 +1,4 @@
-import { useProducts } from "../../hooks/queries/product/useProducts";
+import { useProducts } from "../../hooks/queries/productsQueries/useProducts";
 import { useCategories } from "../../hooks/queries/useCategories";
 import { useSearchParams } from "react-router";
 import ProductCard from "../../components/products/productCard";

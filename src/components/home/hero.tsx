@@ -1,12 +1,14 @@
 import { Link } from "react-router";
 import { motion } from "motion/react";
+import { useAuth } from "../../contexts/authContext";
 
 export default function Hero() {
   const heroImage = "/images/hero.png";
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <section className="px-4 py-6 sm:px-6 lg:px-8 ">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl lg:min-h-115 lg:flex lg:items-center">
+      <div className="relative mx-auto  overflow-hidden rounded-2xl lg:min-h-115 lg:flex lg:items-center">
         {/* Immagine per mobile e tablet */}
         <div
           className="h-56 bg-cover bg-center sm:h-72 lg:hidden"
@@ -20,7 +22,7 @@ export default function Hero() {
         />
 
         {/* Card */}
-        {/* Card */}
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -54,8 +56,7 @@ export default function Hero() {
             transition={{ delay: 0.35, duration: 0.4 }}
             className="mt-3 text-sm leading-relaxed text-base-content/70 sm:mt-4 sm:text-base"
           >
-            Scopri prodotti unici o inizia a vendere alla
-            nostra community.
+            Esplora il nostro catalogo o vendi i tuoi prodotti !
           </motion.p>
 
           <motion.div
@@ -77,10 +78,16 @@ export default function Hero() {
             transition={{ delay: 0.55, duration: 0.4 }}
           >
             <Link
-              to="/become-seller"
-              className="mt-4 block text-center text-sm font-medium text-primary hover:underline"
+              className="link link-hover text-primary text-center block mt-3"
+              to={
+                !isAuthenticated
+                  ? "/login"
+                  : user?.role === "user"
+                    ? "/become-seller"
+                    : "/products/create"
+              }
             >
-              Vuoi vendere? Scopri come fare
+              Inizia a vendere
             </Link>
           </motion.div>
         </motion.div>

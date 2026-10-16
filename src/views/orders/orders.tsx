@@ -1,4 +1,4 @@
-import { useOrders } from "../../hooks/queries/orders/useOrders";
+import { useOrders } from "../../hooks/queries/orderQueries/useOrders";
 import { Link } from "react-router";
 import OrderCard from "../../components/orders/orderCard";
 
@@ -24,7 +24,7 @@ export default function Orders() {
         <div className="rounded-xl border border-base-300 bg-base-100 p-8 text-center">
           <p>Non hai ancora effettuato ordini.</p>
           <Link to="/" className="btn btn-primary mt-4">
-            Scopri i prodotti
+            Esplora il catalogo
           </Link>
         </div>
       </section>

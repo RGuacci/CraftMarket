@@ -1,9 +1,15 @@
-import { useLogout } from "../hooks/mutations/auth/uselogout";
+import { useLogout } from "../hooks/mutations/authMutations/uselogout";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../contexts/authContext";
-import { CgProfile } from "react-icons/cg";
-import { BsCart4 } from "react-icons/bs";
-import { useCart } from "../hooks/queries/cart/useCart";
+import { IoMdCart } from "react-icons/io";
+import { FaUser } from "react-icons/fa6";
+import { LuPackageCheck } from "react-icons/lu";
+import { LuBadgeEuro } from "react-icons/lu";
+import { CgLogOut } from "react-icons/cg";
+import { GiSuitcase } from "react-icons/gi";
+import { FaShop } from "react-icons/fa6";
+import { useCart } from "../hooks/queries/cartQueries/useCart";
+
 import SearchBar from "./navbar/searchBar";
 
 export default function Navbar() {
@@ -29,7 +35,7 @@ export default function Navbar() {
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="container mx-auto flex justify-between md:justify-around items-center">
           {/* Logo */}
-          <div className="text-3xl  font-heading text-primary">
+          <div className="text-4xl  font-heading text-primary">
             <Link to={"/"}>Satisfy</Link>
           </div>
 
@@ -50,7 +56,7 @@ export default function Navbar() {
                 <span className="indicator-item badge badge-primary badge-sm">
                   {cartCount}
                 </span>
-                <BsCart4 className="text-2xl" />
+                <IoMdCart className="text-2xl" />
               </Link>
             )}
 
@@ -59,26 +65,76 @@ export default function Navbar() {
             {isAuthenticated ? (
               <>
                 <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost p-0">
-                    <CgProfile className="text-2xl p-0" />
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    aria-label="Apri menu profilo"
+                    className="btn btn-ghost btn-circle p-0"
+                  >
+                    {/* Icona profilo con le iniziali */}
+                    <div className="avatar placeholder">
+                      <div className="w-11 h-11 rounded-full bg-primary/15 text-primary flex items-center justify-center transition-colors hover:bg-primary/25">
+                        <span className="text-sm font-semibold">
+                          {user?.name
+                            ?.trim()
+                            .split(/\s+/)
+                            .slice(0, 2)
+                            .map((part) => part.charAt(0).toUpperCase())
+                            .join("")}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow">
+                  <ul className="dropdown-content menu bg-base-100 rounded-box z-10 w-56 p-2 shadow">
                     <li>
-                      <Link to="/profile">Il mio profilo</Link>
+                      <Link to="/profile">
+                        {" "}
+                        <FaUser className="text-neutral" />
+                        Il mio profilo
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/profile/orders">I tuoi ordini</Link>
+                      <Link to="/profile/orders">
+                        <LuPackageCheck className="text-neutral" />I miei ordini
+                      </Link>
                     </li>
-                    <span className="divider divider-neutral my-0"></span>
-                    {user?.role === "seller" && (
+
+                    <div className="divider my-1" />
+
+                    {user?.role === "user" && (
                       <li>
-                        <Link to="/seller">Pagina Venditore</Link>
+                        <Link to="/become-seller">
+                          <LuBadgeEuro className="text-green-800" />
+                          Inizia a vendere
+                        </Link>
                       </li>
                     )}
+
+                    {user?.role != "user" && (
+                      <li>
+                        <Link to="/seller">
+                          <FaShop className="text-neutral font-bold" />
+                          Pagina venditore
+                        </Link>
+                      </li>
+                    )}
+
+                    {user?.role === "admin" && (
+                      <li>
+                        <Link to="/admin">
+                          <GiSuitcase className="text-neutral" />
+                          Gestione candidature
+                        </Link>
+                      </li>
+                    )}
+
+                    <div className="divider my-1" />
+
                     <li>
                       <button disabled={isPending} onClick={handleLogout}>
-                        Logout
+                        <CgLogOut className="text-primary" />
+                        {isPending ? "Uscita in corso..." : "Esci"}
                       </button>
                     </li>
                   </ul>
@@ -96,11 +152,25 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Navigazione categorie */}
       <div className="border-t border-base-300">
         <div className="container mx-auto flex justify-center gap-6 py-3">
           <Link to={"/products"}>Tutti i prodotti</Link>
-          <Link to="/#ultimi-arrivi">Novità</Link>
+
+          <Link
+            to="/#ultimi-arrivi"
+            onClick={(event) => {
+              if (window.location.pathname === "/") {
+                event.preventDefault();
+
+                document.getElementById("ultimi-arrivi")?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
+          >
+            Novità
+          </Link>
         </div>
       </div>
     </header>
