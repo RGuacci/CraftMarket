@@ -6,13 +6,14 @@ export default function ExistingImages({
   removeImages,
   onRemove,
 }: ExistingImagesProps) {
+
+  const visibleImages = images.filter((image) => !removeImages.includes(image.id));
+
   return (
     <>
-      {images.length > 0 && (
+      {visibleImages.length > 0 && (
         <div className="flex flex-wrap gap-3 mt-4">
-          {images
-            .filter((image) => !removeImages.includes(image.id))
-            .map((image) => (
+          {visibleImages.map((image) => (
               <div key={image.id} className="text-center">
                 <img
                   src={getImageUrl(image.path)}

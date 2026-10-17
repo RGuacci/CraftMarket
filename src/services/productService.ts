@@ -73,6 +73,7 @@ export interface ProductImages {
 export interface ImageUploaderProps {
   images: File[];
   onChange: (files: File[]) => void;
+  maxImages?: number;
 }
 
 export interface ExistingImagesProps {

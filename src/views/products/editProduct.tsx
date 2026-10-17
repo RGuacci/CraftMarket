@@ -14,6 +14,7 @@ import { getErrorMessage } from "../../utils/errorHandler";
 import { useFlashMessage } from "../../contexts/flashMessageContext";
 import ProductForm from "../../components/products/productForm";
 import { handleServerValidation } from "../../utils/serverValidation";
+import { MAX_PRODUCT_IMAGES } from "../../utils/maxImages";
 
 export default function EditProduct() {
   const { slug } = useParams();
@@ -90,6 +91,8 @@ export default function EditProduct() {
     return <p className="text-red-500">Errore nel caricamento del prodotto</p>;
   }
 
+  const maxNewImages = MAX_PRODUCT_IMAGES - (product.images.length - removeImages.length);
+
   return (
     <>
       <h1 className="text-center my-5 text-5xl">Modifica Articolo</h1>
@@ -110,6 +113,7 @@ export default function EditProduct() {
                     onImagesChange={setImages}
                     isPending={isPending}
                     submitLabel="Salva Modifiche"
+                    maxImages={maxNewImages}
                   >
                     <ExistingImages
                       images={product.images}

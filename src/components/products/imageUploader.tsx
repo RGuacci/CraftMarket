@@ -1,7 +1,13 @@
 import type { ImageUploaderProps } from "../../services/productService";
 import { useState, useEffect } from "react";
+import { MAX_PRODUCT_IMAGES } from "../../utils/maxImages";
 
-const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
+const ImageUploader = ({
+  images,
+  onChange,
+  maxImages = MAX_PRODUCT_IMAGES,
+}: ImageUploaderProps) => {
+  const remaining = maxImages - images.length;
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,10 +23,7 @@ const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
   useEffect(() => {
     const urls = images.map((image) => URL.createObjectURL(image));
     setPreviewUrls(urls);
-    return () => {
-      urls.forEach((url) => URL.revokeObjectURL(url));
-      setPreviewUrls(urls);
-    };
+    return () => urls.forEach((url) => URL.revokeObjectURL(url));
   }, [images]);
 
   return (
@@ -30,12 +33,17 @@ const ImageUploader = ({ images, onChange }: ImageUploaderProps) => {
         type="file"
         className="file-input file-input-neutral"
         multiple
+        disabled={remaining <= 0}
         accept="image/*"
         onChange={(e) => {
           // Controllo numero di immagini
           const files = Array.from(e.target.files ?? []);
-          if (images.length + files.length > 5) {
-            setError("Puoi caricare massimo 5 immagini.");
+          if (files.length > remaining) {
+            setError(
+              remaining <= 0
+                ? `Hai già raggiunto il limite di ${MAX_PRODUCT_IMAGES} immagini.`
+                : `Puoi aggiungere ancora ${remaining} ${remaining === 1 ? "immagine" : "immagini"} (massimo ${MAX_PRODUCT_IMAGES} per prodotto).`,
+            );
             e.target.value = "";
             return;
           }

@@ -3,13 +3,10 @@ import type {
   UseFormClearErrors,
   UseFormRegister,
 } from "react-hook-form";
-
 import type { ProductFormData } from "../../services/productService";
 import type { Category } from "../../services/productService"; 
-
 import CategorySelector from "./categorySelector";
 import ImageUploader from "./imageUploader";
-
 
 
 interface ProductFormProps {
@@ -23,6 +20,7 @@ interface ProductFormProps {
 
   images: File[];
   onImagesChange: (files: File[]) => void;
+  maxImages?: number;
 
   isPending?: boolean;
   submitLabel: string;
@@ -41,8 +39,11 @@ export default function ProductForm({
   isPending = false,
   submitLabel,
   children,
+  maxImages,
 }: ProductFormProps) {
+   
   return (
+
     <>
       <fieldset className="fieldset">
         {errors.name && (
@@ -131,6 +132,7 @@ export default function ProductForm({
         <ImageUploader
           images={images}
           onChange={onImagesChange}
+          maxImages={maxImages}
         />
 
         <button
