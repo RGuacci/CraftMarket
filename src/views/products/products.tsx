@@ -49,10 +49,22 @@ export default function Products() {
   }
 
   // Generazione dei numeri per la paginazione
-  const pages = Array.from(
-    { length: products?.meta.last_page ?? 0 },
+  const lastPage = products?.meta.last_page ?? 0;
+
+  const visiblePages = Array.from(
+    { length: lastPage },
     (_, index) => index + 1,
-  );
+  ).filter((p) => p === 1 || p === lastPage || Math.abs(p - page) <= 1);
+
+  const paginationItems: (number | "...")[] = [];
+
+  visiblePages.forEach((p, index) => {
+    if (index > 0 && p - visiblePages[index - 1] > 1) {
+      paginationItems.push("...");
+    }
+
+    paginationItems.push(p);
+  });
 
   return (
     <section className="w-full flex justify-center px-4">
@@ -86,36 +98,50 @@ export default function Products() {
           </div>
         )}
 
-        {products && products.data.length > 0 && (
-          <div className="flex justify-center my-8">
-            <div className="join">
-              <button
-                className="join-item btn bg-primary text-primary-content"
-                onClick={() => setPage(page - 1)}
-                disabled={page === 1}
-              >
-                «
-              </button>
+        {lastPage > 1 && (
+          <nav
+            aria-label="Paginazione prodotti"
+            className="flex flex-wrap items-center justify-center gap-2 my-8"
+          >
+            {/* Pagina precedente */}
+            <button
+              className="btn btn-sm"
+              onClick={() => setPage((prev) => prev - 1)}
+              disabled={page === 1}
+              aria-label="Pagina precedente"
+            >
+              ←
+            </button>
 
-              {pages.map((pageNumber) => (
+            {/* Numeri e puntini */}
+            {paginationItems.map((item, index) =>
+              item === "..." ? (
+                <span key={`dots-${index}`} className="px-1" aria-hidden="true">
+                  ...
+                </span>
+              ) : (
                 <button
-                  key={pageNumber}
-                  className={`join-item btn  ${pageNumber === page ? "btn" : ""}`}
-                  onClick={() => setPage(pageNumber)}
+                  key={item}
+                  className={`btn btn-sm ${page === item ? "btn-primary" : ""}`}
+                  onClick={() => setPage(item)}
+                  disabled={page === item}
+                  aria-current={page === item ? "page" : undefined}
                 >
-                  {pageNumber}
+                  {item}
                 </button>
-              ))}
+              ),
+            )}
 
-              <button
-                className="join-item btn bg-primary text-primary-content"
-                onClick={() => setPage(page + 1)}
-                disabled={page === products.meta.last_page}
-              >
-                »
-              </button>
-            </div>
-          </div>
+            {/* Pagina successiva */}
+            <button
+              className="btn btn-sm"
+              onClick={() => setPage((prev) => prev + 1)}
+              disabled={page === lastPage}
+              aria-label="Pagina successiva"
+            >
+              →
+            </button>
+          </nav>
         )}
       </div>
     </section>
