@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { handleServerValidation } from "../../utils/serverValidation";
 import { useFlashMessage } from "../../contexts/flashMessageContext";
 import { getErrorMessage } from "../../utils/errorHandler";
+import { getUser } from "../../services/authService";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,8 +36,16 @@ export default function Login() {
         await queryClient.invalidateQueries({
           queryKey: ["user"],
         });
+
+        const user = await getUser();
+
+        queryClient.setQueryData(["user"], user);
+
         const from = location.state?.from;
-        navigate(from ? `${from.pathname}${from.search}${from.hash}` : "/");
+
+        navigate(from ? `${from.pathname}${from.search}${from.hash}` : "/", {
+          replace: true,
+        });
       },
     });
   };
@@ -51,7 +60,10 @@ export default function Login() {
           <div className="card bg-base-200 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <fieldset className="fieldset">
-                <form className="text-center text-lg" onSubmit={handleSubmit(onSubmit)}>
+                <form
+                  className="text-center text-lg"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
                   {/* Email */}
                   <label className="label mb-2">Email</label>
                   <input
@@ -97,6 +109,9 @@ export default function Login() {
                     <Link className="link link-hover" to={"/register"}>
                       Non hai un account?{" "}
                       <span className="font-bold p-1">Registrati</span>
+                    </Link>
+                    <Link className="link link-hover" to="/forgot-password">
+                      Hai dimenticato la password?
                     </Link>
                   </div>
                   <button

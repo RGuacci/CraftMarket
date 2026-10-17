@@ -11,8 +11,11 @@ import Product from "../views/products/product";
 import CreateProduct from "../views/products/createProduct";
 import EditProduct from "../views/products/editProduct";
 
+import GuestRoute from "../components/auth/guestRoute";
 import Login from "../views/auth/login";
 import Register from "../views/auth/register";
+import ForgotPassword from "../views/auth/forgotPassword";
+import ResetPassword from "../views/auth/resetPassword";
 
 import BecomeSeller from "../views/emails/becomeSeller";
 
@@ -59,12 +62,17 @@ export const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
+        element: <GuestRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <Login />,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+          },
+        ],
       },
       {
         path: "/profile",
@@ -89,6 +97,14 @@ export const router = createBrowserRouter([
       {
         path: "/profile/orders/:orderId",
         element: <Order />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/reset-password/:token",
+        element: <ResetPassword />,
       },
     ],
   },

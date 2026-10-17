@@ -55,3 +55,26 @@ export const getUser = async (): Promise<User | null> => {
     throw error;
   }
 };
+
+/* Recupero password */
+export interface ForgotPasswordData {
+  email: string;
+}
+
+export const forgotPassword = async (data: ForgotPasswordData) => {
+  const response = await api.post("/forgot-password", data);
+  return response.data;
+};
+
+/* Reset password */
+export interface ResetPasswordData {
+  token: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
+export const resetPassword = async (data: ResetPasswordData) => {
+  const response = await api.post("/reset-password", data);
+  return response.data;
+};

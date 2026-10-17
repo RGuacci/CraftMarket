@@ -20,8 +20,11 @@ export default function Footer() {
       <nav>
         <h6 className="footer-title text-primary text-lg">Satisfy</h6>
         <a className="link link-hover">Chi siamo</a>
-        <a className="link link-hover">Contattaci</a>
-        <Link className="link link-hover"
+        <a href="mailto:contatti@satisfy.example" className="link link-hover">
+          Contattaci
+        </a>
+        <Link
+          className="link link-hover"
           to={
             !isAuthenticated
               ? "/login"
@@ -29,7 +32,9 @@ export default function Footer() {
                 ? "/become-seller"
                 : "/products/create"
           }
-        >Lavora con noi</Link>
+        >
+          Lavora con noi
+        </Link>
       </nav>
       <nav>
         <h6 className="footer-title text-primary text-lg">Social</h6>
