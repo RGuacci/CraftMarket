@@ -16,7 +16,7 @@ export default function Admin() {
   const [page, setPage] = useState(1);
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
-  const { data, isPending, isError, error } = useSellerRequests(page);
+  const { data, isPending, isError } = useSellerRequests(page);
 
   const { approveMutation, rejectMutation } = useSellerRequestActions();
 

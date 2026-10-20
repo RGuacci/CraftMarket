@@ -105,7 +105,7 @@ export default function Products() {
           >
             {/* Pagina precedente */}
             <button
-              className="btn btn-sm"
+              className="btn btn-sm btn-primary"
               onClick={() => setPage((prev) => prev - 1)}
               disabled={page === 1}
               aria-label="Pagina precedente"
@@ -134,7 +134,7 @@ export default function Products() {
 
             {/* Pagina successiva */}
             <button
-              className="btn btn-sm"
+              className="btn btn-sm btn-primary"
               onClick={() => setPage((prev) => prev + 1)}
               disabled={page === lastPage}
               aria-label="Pagina successiva"

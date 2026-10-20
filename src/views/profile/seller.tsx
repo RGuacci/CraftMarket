@@ -15,7 +15,7 @@ export default function Seller() {
   const { data: products, isLoading, isError } = useMyProducts();
   const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
-  const { mutate: deleteProduct, error } = useDeleteProduct();
+  const { mutate: deleteProduct } = useDeleteProduct();
   const { showFlash } = useFlashMessage();
 
   const handleOpenDeleteModal = (product: Product) => {

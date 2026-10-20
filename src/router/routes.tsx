@@ -1,61 +1,60 @@
+import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router";
 
 import MainLayout from "../layouts/mainLayout";
 import AuthLayout from "../layouts/authLayout";
-
-import Home from "../views/home";
-import NotFound from "../views/notFound";
-
-import Products from "../views/products/products";
-import Product from "../views/products/product";
-import CreateProduct from "../views/products/createProduct";
-import EditProduct from "../views/products/editProduct";
-
 import GuestRoute from "../components/auth/guestRoute";
-import Login from "../views/auth/login";
-import Register from "../views/auth/register";
-import ForgotPassword from "../views/auth/forgotPassword";
-import ResetPassword from "../views/auth/resetPassword";
 
-import BecomeSeller from "../views/emails/becomeSeller";
+// Pagine caricate dinamicamente
+const Home = lazy(() => import("../views/home"));
+const NotFound = lazy(() => import("../views/notFound"));
 
-import CartPage from "../views/cart/cartPage";
+const Products = lazy(() => import("../views/products/products"));
+const Product = lazy(() => import("../views/products/product"));
+const CreateProduct = lazy(() => import("../views/products/createProduct"));
+const EditProduct = lazy(() => import("../views/products/editProduct"));
 
-import Profile from "../views/profile/profile";
-import Seller from "../views/profile/seller";
-import Admin from "../views/profile/admin";
+const Login = lazy(() => import("../views/auth/login"));
+const Register = lazy(() => import("../views/auth/register"));
+const ForgotPassword = lazy(() => import("../views/auth/forgotPassword"));
+const ResetPassword = lazy(() => import("../views/auth/resetPassword"));
 
-import Orders from "../views/orders/orders";
-import Order from "../views/orders/order";
+const BecomeSeller = lazy(() => import("../views/emails/becomeSeller"));
+
+const CartPage = lazy(() => import("../views/cart/cartPage"));
+
+const Profile = lazy(() => import("../views/profile/profile"));
+const Seller = lazy(() => import("../views/profile/seller"));
+const Admin = lazy(() => import("../views/profile/admin"));
+
+const Orders = lazy(() => import("../views/orders/orders"));
+const Order = lazy(() => import("../views/orders/order"));
+
+function PageLoader() {
+  return (
+    <div className="flex min-h-40 items-center justify-center">
+      <span className="loading loading-spinner loading-lg" />
+    </div>
+  );
+}
+
+function withSuspense(element: React.ReactNode) {
+  return <Suspense fallback={<PageLoader />}>{element}</Suspense>;
+}
 
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/products",
-        element: <Products />,
-      },
-      {
-        path: "/products/:slug",
-        element: <Product />,
-      },
-      {
-        path: "/products/create",
-        element: <CreateProduct />,
-      },
+      { path: "/", element: withSuspense(<Home />) },
+      { path: "/products", element: withSuspense(<Products />) },
+      { path: "/products/:slug", element: withSuspense(<Product />) },
+      { path: "/products/create", element: withSuspense(<CreateProduct />) },
       {
         path: "/products/:slug/edit",
-        element: <EditProduct />,
+        element: withSuspense(<EditProduct />),
       },
-      {
-        path: "/cart",
-        element: <CartPage />,
-      },
+      { path: "/cart", element: withSuspense(<CartPage />) },
     ],
   },
   {
@@ -64,52 +63,34 @@ export const router = createBrowserRouter([
       {
         element: <GuestRoute />,
         children: [
-          {
-            path: "/login",
-            element: <Login />,
-          },
-          {
-            path: "/register",
-            element: <Register />,
-          },
+          { path: "/login", element: withSuspense(<Login />) },
+          { path: "/register", element: withSuspense(<Register />) },
         ],
       },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
-      {
-        path: "/seller",
-        element: <Seller />,
-      },
-      {
-        path: "/admin",
-        element: <Admin />,
-      },
+      { path: "/profile", element: withSuspense(<Profile />) },
+      { path: "/seller", element: withSuspense(<Seller />) },
+      { path: "/admin", element: withSuspense(<Admin />) },
       {
         path: "/become-seller",
-        element: <BecomeSeller />,
+        element: withSuspense(<BecomeSeller />),
       },
-      {
-        path: "/profile/orders",
-        element: <Orders />,
-      },
+      { path: "/profile/orders", element: withSuspense(<Orders />) },
       {
         path: "/profile/orders/:orderId",
-        element: <Order />,
+        element: withSuspense(<Order />),
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />,
+        element: withSuspense(<ForgotPassword />),
       },
       {
         path: "/reset-password/:token",
-        element: <ResetPassword />,
+        element: withSuspense(<ResetPassword />),
       },
     ],
   },
   {
     path: "*",
-    element: <NotFound />,
+    element: withSuspense(<NotFound />),
   },
 ]);
