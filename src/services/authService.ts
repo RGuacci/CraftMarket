@@ -12,7 +12,7 @@ export interface RegisterData {
 
 export const register = async (data: RegisterData) => {
   await getCsrfCookie();
-  const response = await api.post("/registrati", data);
+  const response = await api.post("/register", data);
   return response.data;
 };
 
@@ -24,7 +24,7 @@ export interface LoginData {
 
 export const login = async (data: LoginData) => {
   await getCsrfCookie();
-  const response = await api.post("/accedi", data);
+  const response = await api.post("/login", data);
   return response.data;
 };
 
