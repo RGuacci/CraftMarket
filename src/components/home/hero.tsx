@@ -81,7 +81,7 @@ export default function Hero() {
               className="link link-hover text-primary text-center block mt-3"
               to={
                 !isAuthenticated
-                  ? "/login"
+                  ? "/accedi"
                   : user?.role === "user"
                     ? "/become-seller"
                     : "/products/create"

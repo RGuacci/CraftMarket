@@ -63,8 +63,8 @@ export const router = createBrowserRouter([
       {
         element: <GuestRoute />,
         children: [
-          { path: "/login", element: withSuspense(<Login />) },
-          { path: "/register", element: withSuspense(<Register />) },
+          { path: "/accedi", element: withSuspense(<Login />) },
+          { path: "/registrati", element: withSuspense(<Register />) },
         ],
       },
       { path: "/profile", element: withSuspense(<Profile />) },

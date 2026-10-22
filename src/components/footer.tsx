@@ -27,7 +27,7 @@ export default function Footer() {
           className="link link-hover"
           to={
             !isAuthenticated
-              ? "/login"
+              ? "/accedi"
               : user?.role === "user"
                 ? "/become-seller"
                 : "/products/create"

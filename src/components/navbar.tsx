@@ -131,7 +131,7 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link className="btn btn-primary" to={"/register"}>
+                <Link className="btn btn-primary" to={"/registrati"}>
                   <span className="mx-1">Iscriviti</span> |{" "}
                   <span className="mx-1">Accedi</span>
                 </Link>

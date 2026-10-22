@@ -106,7 +106,7 @@ export default function Login() {
                     )}
                   </div>
                   <div className="flex flex-col gap-3">
-                    <Link className="link link-hover" to={"/register"}>
+                    <Link className="link link-hover" to={"/registrati"}>
                       Non hai un account?{" "}
                       <span className="font-bold p-1">Registrati</span>
                     </Link>

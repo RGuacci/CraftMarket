@@ -138,7 +138,7 @@ export default function Register() {
                   </div>
 
                   <div>
-                    <Link to="/login" className="link link-hover">
+                    <Link to="/accedi" className="link link-hover">
                       Hai gia un account ? 
                       <span className="font-bold p-1">Accedi</span>
                     </Link>

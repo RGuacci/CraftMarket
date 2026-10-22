@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://satisfy-api.onrender.com/api/:path*"
+    },
+    {
+      "source": "/sanctum/:path*",
+      "destination": "https://satisfy-api.onrender.com/sanctum/:path*"
+    },
+    {
+      "source": "/login",
+      "destination": "https://satisfy-api.onrender.com/login"
+    },
+    {
+      "source": "/logout",
+      "destination": "https://satisfy-api.onrender.com/logout"
+    },
+    {
+      "source": "/register",
+      "destination": "https://satisfy-api.onrender.com/register"
+    },
+    {
+      "source": "/forgot-password",
+      "destination": "https://satisfy-api.onrender.com/forgot-password"
+    },
+    {
+      "source": "/reset-password",
+      "destination": "https://satisfy-api.onrender.com/reset-password"
+    },
+    {
+      "source": "/user",
+      "destination": "https://satisfy-api.onrender.com/user"
+    },
+    {
+      "source": "/storage/:path*",
+      "destination": "https://satisfy-api.onrender.com/storage/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
