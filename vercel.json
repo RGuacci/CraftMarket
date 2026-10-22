@@ -34,10 +34,6 @@
       "destination": "https://satisfy-api.onrender.com/user"
     },
     {
-      "source": "/storage/:path*",
-      "destination": "https://satisfy-api.onrender.com/storage/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
