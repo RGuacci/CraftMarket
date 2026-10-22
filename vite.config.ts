@@ -14,39 +14,39 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/sanctum": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/storage": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/login": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/logout": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/register": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/forgot-password": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/reset-password": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
       "/user": {
-        target: "https://satisfy-api.onrender.com",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
     },

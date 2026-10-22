@@ -68,7 +68,7 @@ export default function Order() {
         <h2 className="mb-4 text-xl font-semibold">Prodotti acquistati</h2>
 
         <div className="flex flex-col gap-4">
-          {order.order_items.map((item) => (
+          {order.orderItems.map((item) => (
             <article
               key={item.id}
               className="card border border-base-300 bg-base-100 p-5"

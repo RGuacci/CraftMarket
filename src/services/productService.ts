@@ -65,7 +65,7 @@ export interface Category {
 export interface ProductImages {
   id: number;
   product_id: number;
-  path: string;
+  url: string;
   created_at: string;
   updated_at: string;
 }
@@ -184,5 +184,5 @@ export const getCategories = async (): Promise<Category[]> => {
 export const getMyProducts = async (): Promise<Product[]> => {
   const response = await api.get("/api/seller/products");
 
-  return response.data;
+  return response.data.data;
 };

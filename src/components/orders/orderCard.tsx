@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { getImageUrl } from "../../utils/images";
 import type { Order } from "../../services/orderService";
 
 interface OrderCardProps {
@@ -58,48 +57,50 @@ export default function OrderCard({ order }: OrderCardProps) {
       </header>
 
       <div className="flex flex-col gap-5 p-4 sm:p-5">
-        {order.order_items?.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-col gap-4 sm:flex-row sm:items-center"
-          >
-            <div className="flex min-w-0 flex-1 gap-4">
-              <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-base-200 p-2 sm:h-28 sm:w-28">
-                {item.product?.images?.[0]?.path ? (
-                  <img
-                    src={getImageUrl(item.product.images[0].path)}
-                    alt={item.product.name}
-                    className="h-full w-full object-contain"
-                  />
-                ) : (
-                  <span className="text-xs text-base-content/50">
-                    Immagine non disponibile
-                  </span>
-                )}
-              </div>
+        {order.orderItems?.map((item) => {
+          return (
+            <div
+              key={item.id}
+              className="flex flex-col gap-4 sm:flex-row sm:items-center"
+            >
+              <div className="flex min-w-0 flex-1 gap-4">
+                <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-lg bg-base-200 p-2 sm:h-28 sm:w-28">
+                  {item.product?.images?.[0]?.url ? (
+                    <img
+                      src={item.product.images[0].url}
+                      alt={item.product.name}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <span className="text-xs text-base-content/50">
+                      Immagine non disponibile
+                    </span>
+                  )}
+                </div>
 
-              <div className="min-w-0">
-                <h2 className="font-semibold">
-                  {item.product?.name ?? `Prodotto #${item.product_id}`}
-                </h2>
-                <p className="mt-2 text-sm text-base-content/70">
-                  Quantità: {item.quantity}
-                </p>
-                <p className="mt-1 font-medium">
-                  € {Number(item.price).toFixed(2)}
-                </p>
+                <div className="min-w-0">
+                  <h2 className="font-semibold">
+                    {item.product?.name ?? `Prodotto #${item.product_id}`}
+                  </h2>
+                  <p className="mt-2 text-sm text-base-content/70">
+                    Quantità: {item.quantity}
+                  </p>
+                  <p className="mt-1 font-medium">
+                    € {Number(item.price).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+              <div className="sm:w-48 sm:shrink-0">
+                <Link
+                  to={`/profile/orders/${order.id}`}
+                  className="btn btn-primary w-full"
+                >
+                  Dettagli ordine
+                </Link>
               </div>
             </div>
-            <div className="sm:w-48 sm:shrink-0">
-              <Link
-                to={`/profile/orders/${order.id}`}
-                className="btn btn-primary w-full"
-              >
-                Dettagli ordine
-              </Link>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </article>
   );

@@ -13,7 +13,7 @@ export interface OrderItem {
     name: string;
     images?: {
       id: number;
-      path: string;
+      url: string;
     }[];
   } | null;
 }
@@ -30,7 +30,7 @@ export interface Order {
   shipping_city: string;
   shipping_postal_code: string;
   shipping_country: string;
-  order_items: OrderItem[];
+  orderItems: OrderItem[];
   created_at: string;
   updated_at: string;
 }

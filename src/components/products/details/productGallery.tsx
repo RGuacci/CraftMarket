@@ -1,6 +1,6 @@
 import type { Product } from "../../../services/productService";
 import { useState } from "react";
-import { getImageUrl } from "../../../utils/images";
+
 
 interface ProductGalleryProps {
   product: Product;
@@ -26,7 +26,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
               className="w-full h-full min-h-0 cursor-pointer"
             >
               <img
-                src={getImageUrl(product.images[0].path)}
+                src={product.images[0].url}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -53,7 +53,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
                     className="min-h-0 w-full h-full cursor-pointer"
                   >
                     <img
-                      src={getImageUrl(image.path)}
+                      src={image.url}
                       alt={`${product.name} ${index + 2}`}
                       className="w-full h-full object-cover"
                     />
@@ -78,7 +78,7 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
           onClick={() => setModalImage(null)}
         >
           <img
-            src={getImageUrl(product.images[modalImage].path)}
+            src={product.images[modalImage].url}
             alt={`${product.name} ${modalImage + 1}`}
             className="max-w-4xl max-h-[50vh] md:max-h-[80vh] object-contain"
           />

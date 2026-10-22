@@ -1,5 +1,5 @@
 import type { ExistingImagesProps } from "../../services/productService";
-import { getImageUrl } from "../../utils/images";
+
 
 export default function ExistingImages({
   images,
@@ -16,7 +16,7 @@ export default function ExistingImages({
           {visibleImages.map((image) => (
               <div key={image.id} className="text-center">
                 <img
-                  src={getImageUrl(image.path)}
+                  src={image.url}
                   alt={`Immagine ${image.id}`}
                   className="w-24 h-24 object-cover rounded-lg"
                 />

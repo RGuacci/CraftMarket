@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import { BsCartCheck } from "react-icons/bs";
 import { useCart } from "../../hooks/queries/cartQueries/useCart";
 import { useUpdateCartItem } from "../../hooks/mutations/cartMutations/useUpdateCartItem";
-import { getImageUrl } from "../../utils/images";
 import CheckoutButton from "../../components/cart/checkoutButton" ;
 
 interface OrderConfirmation {
@@ -131,7 +130,7 @@ export default function CartPage() {
                   >
                     {image ? (
                       <img
-                        src={getImageUrl(image.path)}
+                        src={image.url}
                         alt={product.name}
                         className="h-full w-full object-cover"
                       />

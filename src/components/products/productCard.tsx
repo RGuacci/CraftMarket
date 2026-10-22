@@ -1,6 +1,5 @@
 import { Link } from "react-router";
 import type { Product } from "../../services/productService";
-import { getImageUrl } from "../../utils/images";
 import { motion } from "motion/react";
 
 interface CardProps {
@@ -28,7 +27,7 @@ export default function Card({ product, index }: CardProps) {
       <figure className="h-40 overflow-hidden">
         {product.images.length > 0 ? (
           <img
-            src={getImageUrl(product.images[0].path)}
+            src={product.images[0].url}
             alt={product.name}
             className="h-full w-full object-cover"
           />
