@@ -20,7 +20,7 @@ export default function ProductActions({
 
   const handleAddToCart = () => {
     if (!isAuthenticated) {
-      navigate("/login", {
+      navigate("/accedi", {
         state: { from: location },
       });
       return;
@@ -34,7 +34,7 @@ export default function ProductActions({
 
   const handleBuyNow = async () => {
     if (!isAuthenticated) {
-      navigate("/login", {
+      navigate("/accedi", {
         state: { from: location },
       });
       return;
